@@ -15,3 +15,15 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.btn {
+  @apply px-4 py-2 rounded-md bg-slate-600 text-gray-50 block
+}
+
+.border-bottom {
+  @apply border-0 border-b border-solid border-gray-300
+}
+
+.border-primary {
+  @apply border border-solid border-gray-300
+}
