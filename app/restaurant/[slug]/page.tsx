@@ -5,12 +5,16 @@ import RestaurantNavbar from "./components/RestaurantNavbar";
 import Gallary from "./components/Gallary";
 import ReviewCard from "./components/ReviewCard";
 import ReserveCard from "./components/ReserveCard";
+import Menu from "./components/Menu";
 
 const page = () => {
   return (
     <>
       {/* DESCRIPTION */}
-      <div className="bg-white rounded rounded-b-none  w-[70%] p-3">
+      <section
+        id="overview"
+        className="bg-white rounded rounded-b-none w-full lg:w-[70%] p-3"
+      >
         <RestaurantNavbar />
         <Title />
         <Ratting />
@@ -29,17 +33,19 @@ const page = () => {
 
         <Gallary />
 
+        <Menu />
+
         {/* REVIEWS */}
-        <div>
+        <section id="review">
           <h3 className="font-bold text-3xl mt-10 mb-7 border-b border-solid border-0 border-gray-300 pb-5">
             What 2 people are saying
           </h3>
-        </div>
+        </section>
 
         <ReviewCard />
         <ReviewCard />
         {/* REVIEWS */}
-      </div>
+      </section>
       {/* DESCRIPTION */}
 
       <ReserveCard />

@@ -1,18 +1,22 @@
-import Link from "next/link";
-
 const RestaurantNavbar = () => {
   return (
-    <nav className="flex font-medium border-bottom">
+    <nav className="flex font-medium border-bottom text-gray-500">
       {/* RESTAURANT NAVBAR */}
-      <Link
-        href="/restaurant/sultan"
+      <a
+        href="#overview"
         className="p-4 pt-1 border-b-2 border-0 border-solid border-red-500 text-red-500 hover:text-red-700"
       >
         Overview
-      </Link>
-      <Link href="/restaurant/sultan/menu" className="p-4 pt-1">
+      </a>
+      <a href="#photos" className="p-4 pt-1">
+        Photos
+      </a>
+      <a href="#menu" className="p-4 pt-1">
         Menu
-      </Link>
+      </a>
+      <a href="#review" className="p-4 pt-1">
+        Review
+      </a>
       {/* RESTAURANT NAVBAR */}
     </nav>
   );

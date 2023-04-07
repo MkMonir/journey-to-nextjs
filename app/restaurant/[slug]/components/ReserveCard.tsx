@@ -1,6 +1,6 @@
 const ReserveCard = () => {
   return (
-    <div className="w-[27%] relative">
+    <div className="w-full lg:w-[27%] relative">
       {/* RESERVATION CARD */}
       <div className="sticky top-0 w-full bg-white rounded-sm p-3 shadow-md">
         <div className="text-center border-b border-0 border-solid border-gray-300 pb-2 font-bold">
@@ -17,8 +17,8 @@ const ReserveCard = () => {
           </select>
         </div>
 
-        <div className="flex justify-between">
-          <div className="flex flex-col w-[48%]">
+        <div className="flex flex-col  justify-between">
+          <div className="flex flex-col w-full">
             <label htmlFor="date">Date</label>
             <input
               type="date"
@@ -26,7 +26,7 @@ const ReserveCard = () => {
             />
           </div>
 
-          <div className="flex flex-col w-[48%]">
+          <div className="flex flex-col w-full">
             <label htmlFor="time">Time</label>
             <select
               id="time"
@@ -38,7 +38,7 @@ const ReserveCard = () => {
           </div>
         </div>
 
-        <button className="p-3 w-full bg-red-400 rounded-sm text-xl text-red-50 active:scale-95 transition-all duration-200 mt-5">
+        <button className="p-3 w-full bg-red-400 rounded-sm md:text-xl text-red-50 active:scale-95 transition-all duration-200 mt-5">
           Find a team
         </button>
       </div>

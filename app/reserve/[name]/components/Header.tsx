@@ -12,12 +12,12 @@ const Header = () => {
         />
 
         <div className="ml-4">
-          <h1 className="text-3xl font-bold">Areyyo</h1>
+          <h1 className="text-3xl font-bold">Aroyee</h1>
 
           <div className="flex mt-3">
             <p className="mr-6">Tues, 22, 2023</p>
             <p className="mr-6">7:30 PM</p>
-            <p className="mr-6">3 Peaple</p>
+            <p className="mr-6">3 People</p>
           </div>
         </div>
       </div>

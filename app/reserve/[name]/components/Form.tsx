@@ -33,7 +33,7 @@ const Form = () => {
         className="border-primary w-80 p-3 rounded-sm"
       />
 
-      <button className="bg-red-600 w-full p-3 text-white font-medium rounded disabled:bg-gray-300">
+      <button className="bg-red-600 w-full p-3 text-white font-medium rounded disabled:bg-gray-300 active:scale-[0.95] transition-all duration-300">
         Complete Reservation
       </button>
       {/* FORM */}

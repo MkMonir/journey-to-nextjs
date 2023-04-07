@@ -1,6 +1,6 @@
 const Gallary = () => {
   return (
-    <div>
+    <section id="photos">
       {/* GALLARY */}
       <h1 className="font-medium text-3xl mt-10 mb-7 border-b border-solid border-0 border-gray-300 pb-5">
         6 photos
@@ -50,7 +50,7 @@ const Gallary = () => {
         </div>
       </div>
       {/* GALLARY */}
-    </div>
+    </section>
   );
 };
 
