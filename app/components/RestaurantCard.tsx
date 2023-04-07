@@ -1,6 +1,11 @@
+import Link from "next/link";
+
 const Card = () => {
   return (
-    <div className="w-64 h-72 m-3 rounded-sm overflow-hidden border border-solid border-gray-400 cursor-pointer shadow-md">
+    <Link
+      href="/restaurant/sultan"
+      className="w-64 h-72 m-3 rounded-sm overflow-hidden border border-solid border-gray-400 cursor-pointer shadow-md"
+    >
       <img
         src="https://resizer.otstatic.com/v2/photos/wide-huge/2/42341018.png"
         alt=""
@@ -74,7 +79,7 @@ const Card = () => {
 
         <p className="mt-1 text-sm font-medium">Books 3 times today</p>
       </div>
-    </div>
+    </Link>
   );
 };
 
