@@ -16,6 +16,7 @@ interface Restaurant {
   description: string;
   images: string[];
   slug: string;
+  mainImage: string;
 }
 
 const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
@@ -29,6 +30,7 @@ const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
       description: true,
       images: true,
       slug: true,
+      mainImage: true,
     },
   });
 
@@ -48,22 +50,16 @@ const page = async ({ params }: { params: { slug: string } }) => {
         className="bg-white rounded rounded-b-none w-full lg:w-[70%] p-3 pt-0"
       >
         <RestaurantNavbar />
-        <Title />
+        <Title name={restaurant.name} />
         <Ratting />
 
         {/* DESC */}
         <div className="mt-4">
-          <p className="text-gray-600">
-            Aroyee is fine dining in the comfort of your home. It is perfect for
-            those wanting It’s a fusion of the best Thai cuisine, exotic
-            ingredients from the Chittagong Hill Tracts, and a western dining
-            service. Our chefs and servers come to your home and cater to your
-            every need.
-          </p>
+          <p className="text-gray-600">{restaurant.description}</p>
         </div>
         {/* DESC */}
 
-        <Gallary />
+        <Gallary images={restaurant.images} />
 
         <Menu />
 
