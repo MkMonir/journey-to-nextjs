@@ -1,6 +1,11 @@
 import Link from "next/link";
+import { RestaurantCardType } from "../page";
 
-const Card = () => {
+interface Props {
+  restaurant: RestaurantCardType;
+}
+
+const RestaurantCard = ({}: Props) => {
   return (
     <Link
       href="/restaurant/sultan"
@@ -83,4 +88,4 @@ const Card = () => {
   );
 };
 
-export default Card;
+export default RestaurantCard;
