@@ -6,8 +6,40 @@ import Gallary from "./components/Gallary";
 import ReviewCard from "./components/ReviewCard";
 import ReserveCard from "./components/ReserveCard";
 import Menu from "./components/Menu";
+import { PrismaClient } from "@prisma/client";
 
-const page = () => {
+const prisma = new PrismaClient();
+
+interface Restaurant {
+  id: number;
+  name: string;
+  description: string;
+  images: string[];
+  slug: string;
+}
+
+const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
+  const restaurant = await prisma.restaurant.findUnique({
+    where: {
+      slug,
+    },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      images: true,
+      slug: true,
+    },
+  });
+
+  if (!restaurant) throw new Error();
+
+  return restaurant;
+};
+
+const page = async ({ params }: { params: { slug: string } }) => {
+  const restaurant = await fetchRestaurant(params.slug);
+
   return (
     <>
       {/* DESCRIPTION */}
