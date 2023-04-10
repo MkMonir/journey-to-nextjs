@@ -13,7 +13,7 @@ const page = () => {
       {/* DESCRIPTION */}
       <section
         id="overview"
-        className="bg-white rounded rounded-b-none w-full lg:w-[70%] p-3"
+        className="bg-white rounded rounded-b-none w-full lg:w-[70%] p-3 pt-0"
       >
         <RestaurantNavbar />
         <Title />

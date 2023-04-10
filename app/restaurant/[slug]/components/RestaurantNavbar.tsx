@@ -1,6 +1,6 @@
 const RestaurantNavbar = () => {
   return (
-    <nav className="flex font-medium border-bottom text-gray-500">
+    <nav className="flex font-medium border-bottom text-gray-500 sticky top-0 bg-white pt-3">
       {/* RESTAURANT NAVBAR */}
       <a
         href="#overview"
