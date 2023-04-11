@@ -1,12 +1,21 @@
-import { Cuisine, Location } from "@prisma/client";
+import { Cuisine, Location, PRICE } from "@prisma/client";
+import Link from "next/link";
 
 const SearchFilterBar = ({
   locations,
   cuisines,
+  searchParams,
 }: {
   locations: Location[];
   cuisines: Cuisine[];
+  searchParams: { city: string; cuisine: string; price: PRICE };
 }) => {
+  const prices = [
+    { price: PRICE.CHEAP, label: "$" },
+    { price: PRICE.REGULAR, label: "$$" },
+    { price: PRICE.EXPENSIVE, label: "$$$" },
+  ];
+
   return (
     <div className="w-1/5">
       {/* SEARCH FILTER */}
@@ -14,12 +23,16 @@ const SearchFilterBar = ({
       <div className="border-bottom pb-4">
         <h1 className="mb-2 font-medium">Region</h1>
         {locations.map((location) => (
-          <p
-            className="font-light hover:underline cursor-pointer capitalize"
+          <Link
+            href={{
+              pathname: "/search",
+              query: { ...searchParams, city: location.name },
+            }}
+            className="font-light hover:underline cursor-pointer capitalize block"
             key={location.id}
           >
             {location.name}
-          </p>
+          </Link>
         ))}
       </div>
       {/* Region */}
@@ -29,12 +42,16 @@ const SearchFilterBar = ({
       <div className="border-bottom pb-4 mt-3">
         <h1 className="mb-2 font-medium">Cuisine</h1>
         {cuisines.map((cuisine) => (
-          <p
-            className="font-light hover:underline cursor-pointer capitalize"
+          <Link
+            href={{
+              pathname: "/search",
+              query: { ...searchParams, cuisine: cuisine.name },
+            }}
+            className="font-light hover:underline cursor-pointer capitalize block"
             key={cuisine.id}
           >
             {cuisine.name}
-          </p>
+          </Link>
         ))}
       </div>
       {/* Cuisine */}
@@ -44,13 +61,18 @@ const SearchFilterBar = ({
         <div className="mb-2 font-medium">Price</div>
 
         <div className="flex border-primary rounded-sm">
-          <button className="w-full p-2 border-0 border-r border-solid border-inherit">
-            $
-          </button>
-          <button className="w-full p-2 border-0 border-r border-solid border-inherit">
-            $$
-          </button>
-          <button className="w-full p-2">$$$</button>
+          {prices.map(({ price, label }, i) => (
+            <Link
+              href={{
+                pathname: "/search",
+                query: { ...searchParams, price },
+              }}
+              className="w-full p-2 border-0 border-r last:border-r-0 border-solid border-inherit text-center"
+              key={i}
+            >
+              {label}
+            </Link>
+          ))}
         </div>
       </div>
       {/* Cuisine */}

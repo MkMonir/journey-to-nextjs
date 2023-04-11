@@ -1,11 +1,11 @@
 import Header from "./components/Header";
 import SearchFilterBar from "./components/SearchFilterBar";
 import RestaurantCard from "./components/RestaurantCard";
-import { PrismaClient } from "@prisma/client";
+import { PRICE, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const fetchRestaurants = (city: string) => {
+const fetchRestaurants = (city: string, cuisine: string) => {
   const select = {
     id: true,
     name: true,
@@ -37,15 +37,26 @@ const fetchCuisines = () => {
   return prisma.cuisine.findMany();
 };
 
-const page = async ({ searchParams }: { searchParams: { city: string } }) => {
-  const restaurants = await fetchRestaurants(searchParams.city);
+const page = async ({
+  searchParams,
+}: {
+  searchParams: { city: string; cuisine: string; price: PRICE };
+}) => {
+  const restaurants = await fetchRestaurants(
+    searchParams.city,
+    searchParams.cuisine
+  );
   const locations = await fetchLocations();
   const cuisines = await fetchCuisines();
   return (
     <>
       <Header />
       <div className="flex gap-5 py-4 m-auto w-2/3 justify-between items-start">
-        <SearchFilterBar locations={locations} cuisines={cuisines} />
+        <SearchFilterBar
+          locations={locations}
+          cuisines={cuisines}
+          searchParams={searchParams}
+        />
         {/* ITEMS */}
         <div className="w-5/6">
           {restaurants.length ? (
