@@ -28,16 +28,17 @@ const SearchFilterBar = () => {
       {/* Cuisine */}
 
       {/* PRICE */}
-      <div className="mt-3 pb-4">
+      <div className="mt-3 pb-4 font-medium">
         <div className="mb-2 font-medium">Price</div>
+
         <div className="flex border-primary rounded-sm">
-          <button className="w-full font-light p-2 border-0 border-r border-solid border-inherit">
+          <button className="w-full p-2 border-0 border-r border-solid border-inherit">
             $
           </button>
-          <button className="w-full font-light p-2 border-0 border-r border-solid border-inherit">
+          <button className="w-full p-2 border-0 border-r border-solid border-inherit">
             $$
           </button>
-          <button className="w-full font-light p-2">$$$</button>
+          <button className="w-full p-2">$$$</button>
         </div>
       </div>
       {/* Cuisine */}
