@@ -18,7 +18,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
   return (
     <div className="border-bottom py-5 flex ">
       {/* RESTAURANT CARD */}
-      <img src={restaurant.mainImage} alt="" className="w-44 rounded-sm" />
+      <img src={restaurant.mainImage} alt="" className="w-48 h-44 rounded-md" />
 
       <div className="pl-5">
         <h2 className="text-3xl">{restaurant.name}</h2>
@@ -29,8 +29,8 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
         <div className="mb-9">
           <div className="font-light flex gap-4">
             <Price price={restaurant.price} />
-            <p className="capitalize">{restaurant.location.name}</p>
             <p className="capitalize">{restaurant.cuisine.name}</p>
+            <p className="capitalize">{restaurant.location.name}</p>
           </div>
         </div>
 
