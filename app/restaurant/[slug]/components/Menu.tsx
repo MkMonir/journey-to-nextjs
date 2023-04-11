@@ -1,6 +1,7 @@
+import { Item } from "@prisma/client";
 import MenuCard from "./MenuCard";
 
-const Menu = () => {
+const Menu = ({ items }: { items: Item[] }) => {
   return (
     <section id="menu" className="bg-white mt-10">
       <div>
@@ -9,10 +10,9 @@ const Menu = () => {
         </div>
 
         <div className="flex flex-wrap justify-between">
-          <MenuCard />
-          <MenuCard />
-          <MenuCard />
-          <MenuCard />
+          {items.map((item) => (
+            <MenuCard key={item.id} item={item} />
+          ))}
         </div>
       </div>
     </section>

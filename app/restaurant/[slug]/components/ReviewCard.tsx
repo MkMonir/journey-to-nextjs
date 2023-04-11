@@ -65,7 +65,7 @@ const ReviewCard = () => {
             </svg>
           </div>
 
-          <p className="mt-4 text-gray-500 font-thin">
+          <p className="mt-4 text-gray-600 font-thin">
             The food was fine but we didnt like the rude gimmick and place was
             so noisy couldnt hear the insults anyway.. Suits young demographic
           </p>

@@ -1,12 +1,11 @@
 import Ratting from "@/app/components/Ratting";
-import Header from "./components/Header";
 import Title from "./components/Title";
 import RestaurantNavbar from "./components/RestaurantNavbar";
 import Gallary from "./components/Gallary";
 import ReviewCard from "./components/ReviewCard";
 import ReserveCard from "./components/ReserveCard";
 import Menu from "./components/Menu";
-import { PrismaClient } from "@prisma/client";
+import { Item, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -17,6 +16,7 @@ interface Restaurant {
   images: string[];
   slug: string;
   mainImage: string;
+  items: Item[];
 }
 
 const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
@@ -31,6 +31,7 @@ const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
       images: true,
       slug: true,
       mainImage: true,
+      items: true,
     },
   });
 
@@ -61,7 +62,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
 
         <Gallary images={restaurant.images} />
 
-        <Menu />
+        <Menu items={restaurant.items} />
 
         {/* REVIEWS */}
         <section id="review">

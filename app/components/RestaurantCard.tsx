@@ -12,12 +12,12 @@ const RestaurantCard = ({ restaurant }: Props) => {
   return (
     <Link
       href={`/restaurant/${restaurant.slug}`}
-      className="w-64 h-72 m-3 rounded-sm overflow-hidden border border-solid border-gray-400 cursor-pointer shadow-md"
+      className="w-64 h-82 m-3 rounded-sm overflow-hidden border border-solid border-gray-400 cursor-pointer shadow-md"
     >
       <img
         src={restaurant.mainImage}
         alt=""
-        className="w-full h-36 object-cover"
+        className="w-full h-44 object-cover object-center"
       />
 
       <div className="p-2">
@@ -34,7 +34,7 @@ const RestaurantCard = ({ restaurant }: Props) => {
           <p>{restaurant.location.name}</p>
         </div>
 
-        <p className="mt-1 text-sm font-medium">Books 3 times today</p>
+        <p className="mt-1 text-base font-medium">Books 3 times today</p>
       </div>
     </Link>
   );
