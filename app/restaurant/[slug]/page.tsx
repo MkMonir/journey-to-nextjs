@@ -6,6 +6,7 @@ import ReviewCard from "./components/ReviewCard";
 import ReserveCard from "./components/ReserveCard";
 import Menu from "./components/Menu";
 import { Item, PrismaClient } from "@prisma/client";
+import Header from "./components/Header";
 
 const prisma = new PrismaClient();
 
@@ -45,39 +46,42 @@ const page = async ({ params }: { params: { slug: string } }) => {
 
   return (
     <>
-      {/* DESCRIPTION */}
-      <section
-        id="overview"
-        className="bg-white rounded rounded-b-none w-full lg:w-[70%] p-3 pt-0"
-      >
-        <RestaurantNavbar />
-        <Title name={restaurant.name} />
-        <Ratting />
+      <Header image={restaurant.mainImage} />
+      <div className="flex flex-col-reverse gap-5 lg:flex-row justify-between m-auto w-2/3 -mt-14">
+        {/* DESCRIPTION */}
+        <section
+          id="overview"
+          className="bg-white rounded rounded-b-none w-full lg:w-[70%] p-3 pt-0"
+        >
+          <RestaurantNavbar />
+          <Title name={restaurant.name} />
+          <Ratting />
 
-        {/* DESC */}
-        <div className="mt-4">
-          <p className="text-gray-600">{restaurant.description}</p>
-        </div>
-        {/* DESC */}
+          {/* DESC */}
+          <div className="mt-4">
+            <p className="text-gray-600">{restaurant.description}</p>
+          </div>
+          {/* DESC */}
 
-        <Gallary images={restaurant.images} />
+          <Gallary images={restaurant.images} />
 
-        <Menu items={restaurant.items} />
+          <Menu items={restaurant.items} />
 
-        {/* REVIEWS */}
-        <section id="review">
-          <h3 className="font-bold text-3xl mt-10 mb-7 border-b border-solid border-0 border-gray-300 pb-5">
-            What 2 people are saying
-          </h3>
+          {/* REVIEWS */}
+          <section id="review">
+            <h3 className="font-bold text-3xl mt-10 mb-7 border-b border-solid border-0 border-gray-300 pb-5">
+              What 2 people are saying
+            </h3>
+          </section>
+
+          <ReviewCard />
+          <ReviewCard />
+          {/* REVIEWS */}
         </section>
+        {/* DESCRIPTION */}
 
-        <ReviewCard />
-        <ReviewCard />
-        {/* REVIEWS */}
-      </section>
-      {/* DESCRIPTION */}
-
-      <ReserveCard />
+        <ReserveCard />
+      </div>
     </>
   );
 };
