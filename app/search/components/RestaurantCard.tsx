@@ -1,31 +1,40 @@
+import Price from "@/app/components/Price";
 import Ratting from "@/app/components/Ratting";
+import { Cuisine, Location, PRICE } from "@prisma/client";
 import Link from "next/link";
 
-const RestaurantCard = () => {
+interface Restaurant {
+  id: number;
+  name: string;
+  mainImage: string;
+  price: PRICE;
+  cuisine: Cuisine;
+  location: Location;
+  slug: string;
+}
+
+const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
+  console.log(restaurant);
   return (
     <div className="border-bottom py-5 flex ">
       {/* RESTAURANT CARD */}
-      <img
-        src="https://resizer.otstatic.com/v2/photos/legacy/2/42341018.png"
-        alt=""
-        className="w-44 rounded-sm"
-      />
+      <img src={restaurant.mainImage} alt="" className="w-44 rounded-sm" />
 
       <div className="pl-5">
-        <h2 className="text-3xl">Aroyee</h2>
+        <h2 className="text-3xl">{restaurant.name}</h2>
         <div className="flex mb-2 items-center">
           <Ratting />
           <p className="ml-2 text-sm">Awesome</p>
         </div>
         <div className="mb-9">
           <div className="font-light flex gap-4">
-            <p>$$$</p>
-            <p>Mexican</p>
-            <p>Ottawa</p>
+            <Price price={restaurant.price} />
+            <p className="capitalize">{restaurant.location.name}</p>
+            <p className="capitalize">{restaurant.cuisine.name}</p>
           </div>
         </div>
 
-        <Link href="/restaurant/aroyee" className="text-red-600">
+        <Link href={`/restaurant/${restaurant.slug}`} className="text-red-600">
           View more information
         </Link>
       </div>

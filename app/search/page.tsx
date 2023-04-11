@@ -41,9 +41,9 @@ const page = async ({ searchParams }: { searchParams: { city: string } }) => {
         <div className="w-5/6">
           {restaurants.length ? (
             <>
-              <RestaurantCard />
-              <RestaurantCard />
-              <RestaurantCard />
+              {restaurants.map((restaurant) => (
+                <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+              ))}
             </>
           ) : (
             <p className="text-4xl font-medium text-center">
