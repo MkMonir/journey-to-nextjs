@@ -5,7 +5,40 @@ import { PRICE, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const fetchRestaurants = (city: string, cuisine: string) => {
+export interface SearchParams {
+  city?: string;
+  cuisine?: string;
+  price?: PRICE;
+}
+
+const fetchRestaurants = (searchParams: SearchParams) => {
+  const where: any = {};
+
+  if (searchParams.city) {
+    const location = {
+      name: {
+        equals: searchParams.city.toLowerCase(),
+      },
+    };
+    where.location = location;
+  }
+
+  if (searchParams.cuisine) {
+    const cuisine = {
+      name: {
+        equals: searchParams.cuisine.toLowerCase(),
+      },
+    };
+    where.cuisine = cuisine;
+  }
+
+  if (searchParams.price) {
+    const price = {
+      equals: searchParams.price,
+    };
+    where.price = price;
+  }
+
   const select = {
     id: true,
     name: true,
@@ -16,16 +49,10 @@ const fetchRestaurants = (city: string, cuisine: string) => {
     slug: true,
   };
 
-  if (!city) return prisma.restaurant.findMany({ select });
+  // if (!city) return prisma.restaurant.findMany({ select });
 
   return prisma.restaurant.findMany({
-    where: {
-      location: {
-        name: {
-          equals: city.toLowerCase(),
-        },
-      },
-    },
+    where,
     select,
   });
 };
@@ -37,21 +64,14 @@ const fetchCuisines = () => {
   return prisma.cuisine.findMany();
 };
 
-const page = async ({
-  searchParams,
-}: {
-  searchParams: { city: string; cuisine: string; price: PRICE };
-}) => {
-  const restaurants = await fetchRestaurants(
-    searchParams.city,
-    searchParams.cuisine
-  );
+const page = async ({ searchParams }: { searchParams: SearchParams }) => {
+  const restaurants = await fetchRestaurants(searchParams);
   const locations = await fetchLocations();
   const cuisines = await fetchCuisines();
   return (
     <>
       <Header />
-      <div className="flex gap-5 py-4 m-auto w-2/3 justify-between items-start">
+      <div className="flex gap-5 py-4 m-auto w-2/3 justify-between items-start min-h-[85vh]">
         <SearchFilterBar
           locations={locations}
           cuisines={cuisines}

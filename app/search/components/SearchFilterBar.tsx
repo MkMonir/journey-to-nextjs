@@ -1,5 +1,6 @@
 import { Cuisine, Location, PRICE } from "@prisma/client";
 import Link from "next/link";
+import { SearchParams } from "../page";
 
 const SearchFilterBar = ({
   locations,
@@ -8,7 +9,7 @@ const SearchFilterBar = ({
 }: {
   locations: Location[];
   cuisines: Cuisine[];
-  searchParams: { city: string; cuisine: string; price: PRICE };
+  searchParams: SearchParams;
 }) => {
   const prices = [
     { price: PRICE.CHEAP, label: "$" },
