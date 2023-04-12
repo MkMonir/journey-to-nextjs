@@ -25,7 +25,7 @@ model Restaurant{
   location Location @relation(fields: [location_id],references: [id])
   cuisine_id Int
   cuisine Cuisine @relation(fields: [cuisine_id],references: [id])
-  review_id Review[]
+  reviews Review[]
 
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
@@ -84,6 +84,7 @@ model User{
   last_name   String
   city        String
   email       String
+  password    String
   phone       String
   reviews Review[]
 
