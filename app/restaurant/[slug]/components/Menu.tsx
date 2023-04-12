@@ -5,7 +5,7 @@ const Menu = ({ items }: { items: Item[] }) => {
   return (
     <section id="menu" className="bg-white mt-10">
       <div>
-        <div className="mt-4 pb-1 mb-1">
+        <div className="pb-3 my-5 border-bottom">
           <h1 className="font-bold text-3xl">Menu</h1>
         </div>
 

@@ -1,14 +1,21 @@
-const ReviewCard = () => {
+import { Review } from "@prisma/client";
+
+const ReviewCard = ({ review }: { review: Review }) => {
   return (
     <div className="border-b border-solid border-0 border-gray-300 pb-7 mb-7">
       {/* REVIEW CARD */}
       <div className="flex gap-5">
-        <div className="flex flex-col items-center w-[150px]">
+        <div className="flex flex-col justify-center items-center">
           <div className="rounded-full bg-teal-400 w-14 h-14 flex items-center justify-center text-white text-xl">
-            <h2>AR</h2>
+            <h2>
+              {review.first_name[0]}
+              {review.last_name[0]}
+            </h2>
           </div>
 
-          <p>Ashiqur</p>
+          <p className="w-[120px] text-center">
+            {review.first_name} {review.last_name}
+          </p>
         </div>
 
         <div>
@@ -65,10 +72,7 @@ const ReviewCard = () => {
             </svg>
           </div>
 
-          <p className="mt-4 text-gray-600 font-thin">
-            The food was fine but we didnt like the rude gimmick and place was
-            so noisy couldnt hear the insults anyway.. Suits young demographic
-          </p>
+          <p className="mt-4 text-gray-700 ">{review.text}</p>
         </div>
       </div>
       {/* REVIEW CARD */}

@@ -5,7 +5,7 @@ import Gallary from "./components/Gallary";
 import ReviewCard from "./components/ReviewCard";
 import ReserveCard from "./components/ReserveCard";
 import Menu from "./components/Menu";
-import { Item, PrismaClient } from "@prisma/client";
+import { Item, PrismaClient, Review } from "@prisma/client";
 import Header from "./components/Header";
 
 const prisma = new PrismaClient();
@@ -18,6 +18,7 @@ interface Restaurant {
   slug: string;
   mainImage: string;
   items: Item[];
+  reviews: Review[];
 }
 
 const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
@@ -33,6 +34,7 @@ const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
       slug: true,
       mainImage: true,
       items: true,
+      reviews: true,
     },
   });
 
@@ -55,7 +57,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
         >
           <RestaurantNavbar />
           <Title name={restaurant.name} />
-          <Ratting />
+          <Ratting reviews={restaurant.reviews} />
 
           {/* DESC */}
           <div className="mt-4">
@@ -70,12 +72,14 @@ const page = async ({ params }: { params: { slug: string } }) => {
           {/* REVIEWS */}
           <section id="review">
             <h3 className="font-bold text-3xl mt-10 mb-7 border-b border-solid border-0 border-gray-300 pb-5">
-              What 2 people are saying
+              What {restaurant.reviews.length}{" "}
+              {restaurant.reviews.length === 1 ? "Person" : "people"} are saying
             </h3>
           </section>
 
-          <ReviewCard />
-          <ReviewCard />
+          {restaurant.reviews.map((review) => (
+            <ReviewCard review={review} key={review.id} />
+          ))}
           {/* REVIEWS */}
         </section>
         {/* DESCRIPTION */}

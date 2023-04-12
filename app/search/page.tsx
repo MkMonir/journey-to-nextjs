@@ -1,7 +1,7 @@
 import Header from "./components/Header";
 import SearchFilterBar from "./components/SearchFilterBar";
 import RestaurantCard from "./components/RestaurantCard";
-import { PRICE, PrismaClient } from "@prisma/client";
+import { PRICE, PrismaClient, Review } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -47,6 +47,7 @@ const fetchRestaurants = (searchParams: SearchParams) => {
     cuisine: true,
     location: true,
     slug: true,
+    reviews: true,
   };
 
   // if (!city) return prisma.restaurant.findMany({ select });
