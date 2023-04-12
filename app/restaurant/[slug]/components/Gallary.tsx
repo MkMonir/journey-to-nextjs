@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const Gallary = ({ images }: { images: string[] }) => {
   return (
     <section id="photos">

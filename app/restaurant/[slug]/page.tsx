@@ -78,7 +78,11 @@ const page = async ({ params }: { params: { slug: string } }) => {
           </section>
 
           {restaurant.reviews.map((review) => (
-            <ReviewCard review={review} key={review.id} />
+            <ReviewCard
+              review={review}
+              key={review.id}
+              reviews={restaurant.reviews}
+            />
           ))}
           {/* REVIEWS */}
         </section>

@@ -1,6 +1,6 @@
 import Price from "@/app/components/Price";
 import Ratting from "@/app/components/Ratting";
-import calculateReviewRatingAvg from "@/utils/CalculateReviewRatingAvg";
+import calculateReviewRatingAvg from "@/utils/calculateReviewRatingAvg";
 import { Cuisine, Location, PRICE, Review } from "@prisma/client";
 import Link from "next/link";
 
@@ -33,7 +33,7 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
       <div className="pl-5">
         <h2 className="text-3xl">{restaurant.name}</h2>
         <div className="flex mb-2 items-center">
-          <Ratting />
+          <Ratting reviews={restaurant.reviews} />
           <p className="ml-2 text-sm">{renderRattingText()}</p>
         </div>
         <div className="mb-9">

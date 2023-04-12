@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const Header = ({ image }: { image: string }) => {
   return (
     <div className="h-[50vh] aspect-w-1 aspect-h-1">
