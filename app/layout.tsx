@@ -24,7 +24,7 @@ export default function RootLayout({
       </head>
       <body>
         <main className="bg-gray-200 min-h-screen w-screen">
-          <div className="max-w-screen-2xl m-auto bg-white">
+          <div className="bg-white">
             <Navbar />
             {children}
           </div>

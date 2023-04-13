@@ -3,8 +3,8 @@ import Modal from "./Modal";
 
 const Navbar = () => {
   return (
-    <nav className="bg-white py-2 px-5 flex justify-between">
-      <Link href="/" className="font-bold text-gray-700 text-2xl">
+    <nav className="bg-white py-3 px-5 flex justify-between items-center container mx-auto">
+      <Link href="/" className="font-bold text-gray-700 text-2xl md:text-3xl">
         AddaKhana
       </Link>
 
