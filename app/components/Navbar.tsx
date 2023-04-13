@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Modal from "./Modal";
 
 const Navbar = () => {
   return (
@@ -8,12 +9,11 @@ const Navbar = () => {
       </Link>
 
       <div className="flex gap-2">
-        <button className="bg-teal-600 px-4 py-1.5 rounded text-teal-50 active:scale-95 transition-all duration-200">
+        {/* <button className="bg-teal-600 px-4 py-1.5 rounded text-teal-50 active:scale-95 transition-all duration-200">
           Sign up
-        </button>
-        <button className=" px-4 py-1.5 rounded border-primary active:scale-95 transition-all duration-200">
-          Sign in
-        </button>
+        </button> */}
+        <Modal isSignin={false} />
+        <Modal isSignin={true} />
       </div>
     </nav>
   );
