@@ -15,7 +15,9 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
     password: "",
   });
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   const handleClose = (e: any) => {
     if (!modalRef.current) {
@@ -30,8 +32,11 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  if (open) document.body.style.overflowY = "hidden";
+  else document.body.style.overflowY = "scroll";
+
   return (
-    <>
+    <div>
       {/* <!-- Modal toggle --> */}
       <button
         className={`active:scale-95 transition-all duration-200 px-4 py-1.5 rounded ${
@@ -45,16 +50,18 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
 
       {/* <!-- Main modal --> */}
       <div
-        className={`fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-hidden md:inset-0 h-screen transition-all duration-300 ease-in-out grid ${
-          open ? "opacity-100 visible" : "opacity-0 invisible "
-        } place-items-center bg-gray-800 bg-opacity-30`}
+        className={`fixed inset-0 z-50 w-full p-4 overflow-hidden h-full transition-all duration-200 ease-in-out  ${
+          open ? "opacity-100 visible" : "opacity-0 invisible"
+        } grid place-items-center bg-gray-800 bg-opacity-40`}
         onClick={handleClose}
       >
         <div className="relative w-full max-w-lg max-h-full">
           {/* <!-- Modal content --> */}
           <div
-            className={`relative bg-white rounded-lg shadow transition-all duration-300 ease-in-out ${
-              open ? "scale-100" : "scale-0"
+            className={`relative bg-white rounded-lg shadow transition-all duration-200 ease-in-out ${
+              open
+                ? "scale-100 opacity-100 visible"
+                : "scale-0 opacity-0 invisible"
             }`}
             ref={modalRef}
           >
@@ -71,9 +78,9 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 ></path>
               </svg>
               <span className="sr-only">Close modal</span>
@@ -178,7 +185,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
