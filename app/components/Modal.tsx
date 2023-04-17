@@ -1,19 +1,41 @@
-"use client";
+'use client';
 
-import { useRef, useState } from "react";
-import Input from "./Input";
+import { useEffect, useRef, useState } from 'react';
+import Input from './Input';
 
 const Modal = ({ isSignin }: { isSignin: boolean }) => {
   const modalRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    city: "",
-    phone: "",
-    email: "",
-    password: "",
+    first_name: '',
+    last_name: '',
+    city: '',
+    phone: '',
+    email: '',
+    password: '',
   });
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    if (isSignin) {
+      if (formData.email && formData.password) {
+        return setDisabled(false);
+      }
+    } else {
+      if (
+        formData.email &&
+        formData.password &&
+        formData.first_name &&
+        formData.last_name &&
+        formData.city &&
+        formData.phone
+      ) {
+        return setDisabled(false);
+      }
+    }
+
+    setDisabled(true);
+  }, [formData]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -32,26 +54,26 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  if (open) document.body.style.overflowY = "hidden";
-  else document.body.style.overflowY = "scroll";
+  if (open) document.body.style.overflowY = 'hidden';
+  else document.body.style.overflowY = 'scroll';
 
   return (
     <div>
       {/* <!-- Modal toggle --> */}
       <button
         className={`active:scale-95 transition-all duration-200 px-4 py-1.5 rounded ${
-          isSignin ? "border-primary" : "bg-teal-600 text-teal-50"
+          isSignin ? 'border-primary' : 'bg-teal-600 text-teal-50'
         } `}
         type="button"
         onClick={handleOpen}
       >
-        {isSignin ? "Signin" : "Signup"}
+        {isSignin ? 'Signin' : 'Signup'}
       </button>
 
       {/* <!-- Main modal --> */}
       <div
         className={`fixed inset-0 z-50 w-full p-4 overflow-hidden h-full transition-all duration-200 ease-in-out  ${
-          open ? "opacity-100 visible" : "opacity-0 invisible"
+          open ? 'opacity-100 visible' : 'opacity-0 invisible'
         } grid place-items-center bg-gray-800 bg-opacity-40`}
         onClick={handleClose}
       >
@@ -59,9 +81,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
           {/* <!-- Modal content --> */}
           <div
             className={`relative bg-white rounded-lg shadow transition-all duration-200 ease-in-out ${
-              open
-                ? "scale-100 opacity-100 visible"
-                : "scale-0 opacity-0 invisible"
+              open ? 'scale-100 opacity-100 visible' : 'scale-0 opacity-0 invisible'
             }`}
             ref={modalRef}
           >
@@ -87,9 +107,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
             </button>
             <div className="px-6 py-6 lg:px-8">
               <h3 className="my-4 text-2xl font-medium text-gray-900 text-center">
-                {isSignin
-                  ? "Sign in to our platform"
-                  : "Create your AddaKhana account"}
+                {isSignin ? 'Sign in to our platform' : 'Create your AddaKhana account'}
               </h3>
               <form className="space-y-6 mt-5">
                 {!isSignin && (
@@ -170,9 +188,10 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
                 </div> */}
                 <button
                   type="submit"
-                  className="w-full text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                  className="w-full text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:bg-gray-400"
+                  disabled={disabled}
                 >
-                  {isSignin ? "Login to your account" : "Create a new account"}
+                  {isSignin ? 'Login to your account' : 'Create a new account'}
                 </button>
                 {/* <div className="text-sm font-medium text-gray-500">
                   {isSignin ? "Already have an account" : "Not registered"}?{" "}
