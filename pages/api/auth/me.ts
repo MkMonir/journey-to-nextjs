@@ -17,17 +17,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
-  const user = await prisma.user.findUnique({
+  const user: any = await prisma.user.findUnique({
     where: {
       email: payload.email,
-    },
-    select: {
-      id: true,
-      first_name: true,
-      last_name: true,
-      email: true,
-      city: true,
-      phone: true,
     },
   });
 
@@ -37,11 +29,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
-  return res.json({
-    id: user.id,
-    first_name: user.first_name,
-    last_name: user.last_name,
-    phone: user.phone,
-    city: user.city,
+  user.password = undefined;
+
+  return res.status(201).json({
+    status: 'success',
+    data: user,
   });
 }
