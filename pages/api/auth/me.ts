@@ -1,32 +1,47 @@
-import { PrismaClient } from '@prisma/client';
-import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { promisify } from 'util';
+
+import jwt from 'jsonwebtoken';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const token =
-    req.headers['authorization'] && (req.headers['authorization'].split(' ')[1] as string);
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const bearerToken = req.headers['authorization'] as string;
+  const token = bearerToken.split(' ')[1];
 
-  if (!token) {
+  const payload = jwt.decode(token) as { email: string };
+
+  if (!payload.email) {
     return res.status(401).json({
-      status: 'fail',
-      message: 'You are not logged in. Please login first.',
+      errorMessage: 'Unauthorized request',
     });
   }
 
-  const decoded: any = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-
-  const user: any = await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
-      email: decoded.email,
+      email: payload.email,
+    },
+    select: {
+      id: true,
+      first_name: true,
+      last_name: true,
+      email: true,
+      city: true,
+      phone: true,
     },
   });
 
-  user.password = undefined;
+  if (!user) {
+    return res.status(401).json({
+      errorMessage: 'User not found',
+    });
+  }
 
-  return res.status(200).json({ status: 'success', data: user });
-};
-
-export default handler;
+  return res.json({
+    id: user.id,
+    first_name: user.first_name,
+    last_name: user.last_name,
+    phone: user.phone,
+    city: user.city,
+  });
+}

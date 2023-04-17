@@ -34,16 +34,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
-  const userExist = await prisma.user.findUnique({ where: { email } });
+  const user: any = await prisma.user.findUnique({ where: { email } });
 
-  if (!userExist) {
+  if (!user) {
     return res.status(400).json({
       status: 'fail',
       message: 'Incorrect email or password',
     });
   }
 
-  const passwordCarrect = await bcrypt.compare(password, userExist.password);
+  const passwordCarrect = await bcrypt.compare(password, user.password);
 
   if (!passwordCarrect) {
     return res.status(400).json({
@@ -54,11 +54,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const token = jwt.sign({ email }, process.env.JWT_SECRET ?? '', { expiresIn: '10d' });
 
+  user.password = undefined;
+
   if (req.method === 'POST') {
     res.status(200).json({
       status: 'success',
       token,
-      data: userExist,
+      data: user,
     });
   }
 
