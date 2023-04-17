@@ -63,7 +63,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (userExist) {
     return res.status(400).json({
       status: 'fail',
-      data: 'You already have an account with this email address',
+      message: 'You already have an account with this email address',
     });
   }
 
@@ -89,6 +89,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       data: user,
     });
   }
+
+  return res.status(401).json({
+    status: 'fail',
+    message: 'Undefind Endpoint',
+  });
 };
 
 export default handler;
