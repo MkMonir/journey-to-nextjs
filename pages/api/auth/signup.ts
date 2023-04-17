@@ -1,6 +1,7 @@
-import { PrismaClient } from "@prisma/client";
-import { NextApiRequest, NextApiResponse } from "next";
-import validator from "validator";
+import { PrismaClient } from '@prisma/client';
+import { NextApiRequest, NextApiResponse } from 'next';
+import validator from 'validator';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
@@ -14,32 +15,32 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         min: 1,
         max: 20,
       }),
-      errorMessage: "First name is invalid",
+      errorMessage: 'First name is invalid',
     },
     {
       valid: validator.isLength(last_name, {
         min: 1,
         max: 20,
       }),
-      errorMessage: "Last name is invalid",
+      errorMessage: 'Last name is invalid',
     },
     {
       valid: validator.isEmail(email),
-      errorMessage: "Email address is invalid",
+      errorMessage: 'Email address is invalid',
     },
     {
       valid: validator.isMobilePhone(phone),
-      errorMessage: "Phone number is invalid",
+      errorMessage: 'Phone number is invalid',
     },
     {
       valid: validator.isLength(city, {
         min: 1,
       }),
-      errorMessage: "City name is Invalid",
+      errorMessage: 'City name is Invalid',
     },
     {
       valid: validator.isStrongPassword(password),
-      errorMessage: "Password is not strong enough",
+      errorMessage: 'Password is not strong enough',
     },
   ];
 
@@ -51,24 +52,37 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (errors.length) {
     return res.status(400).json({
-      status: "fail",
+      status: 'fail',
       data: errors[0],
     });
   }
 
-  const user = await prisma.user.findUnique({ where: { email } });
+  const userExist = await prisma.user.findUnique({ where: { email } });
 
-  if (user) {
+  if (userExist) {
     return res.status(400).json({
-      status: "fail",
-      data: "You already exists with the same email",
+      status: 'fail',
+      data: 'You already exists with the same email',
     });
   }
 
-  if (req.method === "POST") {
+  const hashedPassword = await bcrypt.hash(password, 12);
+
+  const user = await prisma.user.create({
+    data: {
+      first_name,
+      last_name,
+      email,
+      password: hashedPassword,
+      city,
+      phone,
+    },
+  });
+
+  if (req.method === 'POST') {
     res.status(200).json({
-      status: "success",
-      data: "Hello world",
+      status: 'success',
+      data: user,
     });
   }
 };
