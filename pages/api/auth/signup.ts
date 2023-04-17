@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
@@ -62,7 +63,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (userExist) {
     return res.status(400).json({
       status: 'fail',
-      data: 'You already exists with the same email',
+      data: 'You already have an account with this email address',
     });
   }
 
@@ -79,9 +80,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     },
   });
 
+  const token = jwt.sign({ email }, process.env.JWT_SECRET ?? '', { expiresIn: '10d' });
+
   if (req.method === 'POST') {
     res.status(200).json({
       status: 'success',
+      token,
       data: user,
     });
   }
