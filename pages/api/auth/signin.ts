@@ -31,7 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (errors.length) {
     return res.status(400).json({
       status: 'fail',
-      data: errors[0],
+      message: errors[0],
     });
   }
 

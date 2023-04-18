@@ -8,7 +8,7 @@ import Loading from './Loading';
 import Alert from './Alert';
 
 const Modal = ({ isSignin }: { isSignin: boolean }) => {
-  const { signIn } = useAuth();
+  const { signIn, signUp } = useAuth();
   const modalRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -52,6 +52,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
       return;
     }
     if (!modalRef.current.contains(e.target)) {
+      setFormData({ first_name: '', last_name: '', city: '', phone: '', email: '', password: '' });
       return setOpen(false);
     }
   };
@@ -65,8 +66,11 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-
-    signIn({ email: formData.email, password: formData.password }, handleClose);
+    if (isSignin) {
+      signIn({ email: formData.email, password: formData.password }, handleClose);
+    } else {
+      signUp(formData, handleClose);
+    }
   };
 
   return (
@@ -165,7 +169,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
                   </>
                 )}
                 <Input
-                  type="email"
+                  type="text"
                   id="email"
                   placeholder="jhon@gmail.com"
                   label="Your Email Address"
@@ -181,25 +185,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
                   handleChange={handleChange}
                   value={formData.password}
                 />
-                {/* <div className="flex justify-between">
-                  <div className="flex items-start">
-                    <div className="flex items-center h-5">
-                      <input
-                        id="remember"
-                        type="checkbox"
-                        value=""
-                        className="w-4 h-4 border border-gray-300 border-solid rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
-                        required
-                      />
-                    </div>
-                    <label
-                      htmlFor="remember"
-                      className="ml-2 text-sm font-medium text-gray-900"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-                </div> */}
+
                 {loading ? (
                   <Loading />
                 ) : (
@@ -211,12 +197,6 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
                     {isSignin ? 'Login to your account' : 'Create a new account'}
                   </button>
                 )}
-                {/* <div className="text-sm font-medium text-gray-500">
-                  {isSignin ? "Already have an account" : "Not registered"}?{" "}
-                  <button className="text-teal-700 hover:underline">
-                    {isSignin ? "Login to your account" : "Create account"}
-                  </button>
-                </div> */}
               </form>
             </div>
           </div>
