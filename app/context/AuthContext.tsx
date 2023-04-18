@@ -24,7 +24,7 @@ interface AuthState extends State {
 }
 
 const intialState = {
-  loading: true,
+  loading: false,
   error: null,
   data: null,
   setAuthState: () => {},
@@ -37,6 +37,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
 
   const fetchUser = async () => {
     setAuthState({ loading: true, error: null, data: null });
+
     try {
       const jwt = getCookie('jwt');
 

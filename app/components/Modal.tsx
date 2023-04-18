@@ -67,9 +67,9 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (isSignin) {
-      signIn({ email: formData.email, password: formData.password }, handleClose);
+      signIn({ email: formData.email, password: formData.password });
     } else {
-      signUp(formData, handleClose);
+      signUp(formData);
     }
   };
 
