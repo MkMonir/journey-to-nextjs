@@ -11,7 +11,7 @@ const useAuth = () => {
       const res = await axios.post('http://localhost:3000/api/auth/signin', { email, password });
       setAuthState({ loading: false, error: null, data: res.data });
     } catch (err: any) {
-      setAuthState({ loading: false, error: err.response.errorMessage, data: null });
+      setAuthState({ loading: false, error: err.response.data.message, data: null });
     }
   };
   const signUp = async () => {};

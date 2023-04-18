@@ -5,6 +5,7 @@ import Input from './Input';
 import useAuth from '@/hooks/useAuth';
 import { AuthContext } from '../context/AuthContext';
 import Loading from './Loading';
+import Alert from './Alert';
 
 const Modal = ({ isSignin }: { isSignin: boolean }) => {
   const { signIn } = useAuth();
@@ -40,7 +41,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
     }
 
     setDisabled(true);
-  }, [formData]);
+  }, [formData, isSignin]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -116,10 +117,12 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
               </svg>
               <span className="sr-only">Close modal</span>
             </button>
+
             <div className="px-6 py-6 lg:px-8">
               <h3 className="my-4 text-2xl font-medium text-gray-900 text-center">
                 {isSignin ? 'Sign in to our platform' : 'Create your AddaKhana account'}
               </h3>
+              {error && <Alert text={error} />}
               <form className="space-y-6 mt-5" onSubmit={handleSubmit}>
                 {!isSignin && (
                   <>
