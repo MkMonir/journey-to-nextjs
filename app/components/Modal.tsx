@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Input from './Input';
 import useAuth from '@/hooks/useAuth';
+import { AuthContext } from '../context/AuthContext';
 
 const Modal = ({ isSignin }: { isSignin: boolean }) => {
   const { signIn } = useAuth();
@@ -17,6 +18,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
     password: '',
   });
   const [disabled, setDisabled] = useState(true);
+  const { error } = useContext(AuthContext);
 
   useEffect(() => {
     if (isSignin) {
