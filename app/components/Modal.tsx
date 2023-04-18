@@ -4,6 +4,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import Input from './Input';
 import useAuth from '@/hooks/useAuth';
 import { AuthContext } from '../context/AuthContext';
+import Loading from './Loading';
 
 const Modal = ({ isSignin }: { isSignin: boolean }) => {
   const { signIn } = useAuth();
@@ -18,7 +19,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
     password: '',
   });
   const [disabled, setDisabled] = useState(true);
-  const { error } = useContext(AuthContext);
+  const { error, loading } = useContext(AuthContext);
 
   useEffect(() => {
     if (isSignin) {
@@ -196,13 +197,17 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
                     </label>
                   </div>
                 </div> */}
-                <button
-                  type="submit"
-                  className="w-full text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:bg-gray-400"
-                  disabled={disabled}
-                >
-                  {isSignin ? 'Login to your account' : 'Create a new account'}
-                </button>
+                {loading ? (
+                  <Loading />
+                ) : (
+                  <button
+                    type="submit"
+                    className="w-full text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:bg-gray-400"
+                    disabled={disabled}
+                  >
+                    {isSignin ? 'Login to your account' : 'Create a new account'}
+                  </button>
+                )}
                 {/* <div className="text-sm font-medium text-gray-500">
                   {isSignin ? "Already have an account" : "Not registered"}?{" "}
                   <button className="text-teal-700 hover:underline">
