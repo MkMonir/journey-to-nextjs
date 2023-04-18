@@ -126,7 +126,6 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
               <h3 className="my-4 text-2xl font-medium text-gray-900 text-center">
                 {isSignin ? 'Sign in to our platform' : 'Create your AddaKhana account'}
               </h3>
-              {data?.first_name}
               {error && <Alert text={error} />}
               <form className="space-y-6 mt-5" onSubmit={handleSubmit}>
                 {!isSignin && (

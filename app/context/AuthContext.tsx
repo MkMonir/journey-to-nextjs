@@ -24,7 +24,7 @@ interface AuthState extends State {
 }
 
 const intialState = {
-  loading: false,
+  loading: true,
   error: null,
   data: null,
   setAuthState: () => {},
