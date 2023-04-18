@@ -20,7 +20,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
     password: '',
   });
   const [disabled, setDisabled] = useState(true);
-  const { error, loading } = useContext(AuthContext);
+  const { error, loading, data } = useContext(AuthContext);
 
   useEffect(() => {
     if (isSignin) {
@@ -52,7 +52,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
       return;
     }
     if (!modalRef.current.contains(e.target)) {
-      setOpen(false);
+      return setOpen(false);
     }
   };
 
@@ -66,7 +66,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    signIn({ email: formData.email, password: formData.password });
+    signIn({ email: formData.email, password: formData.password }, handleClose);
   };
 
   return (

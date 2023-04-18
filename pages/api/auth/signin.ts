@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { setCookie } from 'cookies-next';
 
 const prisma = new PrismaClient();
 
@@ -56,10 +57,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   user.password = undefined;
 
+  setCookie('jwt', token, { res, req, maxAge: 60 * 60 * 7 * 24 });
+
   if (req.method === 'POST') {
     res.status(200).json({
       status: 'success',
-      token,
       data: user,
     });
   }
