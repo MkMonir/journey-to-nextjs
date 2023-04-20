@@ -2,6 +2,7 @@ import Navbar from './components/Navbar';
 import { AuthContextProvider } from './context/AuthContext';
 import './globals.css';
 import { Inter } from 'next/font/google';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const inter = Inter({
   subsets: ['latin'],
