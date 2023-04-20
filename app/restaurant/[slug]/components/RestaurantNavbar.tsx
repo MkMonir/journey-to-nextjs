@@ -4,7 +4,7 @@ const RestaurantNavbar = () => {
       {/* RESTAURANT NAVBAR */}
       <a
         href="#overview"
-        className="p-4 pt-1 border-b-2 border-0 border-solid border-red-500 text-red-500 hover:text-red-700"
+        className="p-4 pt-1 border-b-2 border-0 border-solid border-teal-500 text-teal-500 hover:text-teal-700"
       >
         Overview
       </a>

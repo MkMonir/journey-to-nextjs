@@ -46,7 +46,7 @@ const ReserveCard = ({ openTime, closeTime }: { openTime: string; closeTime: str
           <label htmlFor="party">Party Size</label>
           <select
             id="party"
-            className="py-3 border-b border-0 border-gray-300 border-solid font-light focus-within:ring-0"
+            className="py-3 border-b border-0 border-gray-300 border-solid focus-within:ring-0"
           >
             {partySize.map((party, i) => (
               <option key={i} value={party.value}>
@@ -62,7 +62,7 @@ const ReserveCard = ({ openTime, closeTime }: { openTime: string; closeTime: str
             <DatePicker
               selected={selectedDate}
               onChange={handleChangeDate}
-              className="py-3 border-b border-0 border-gray-300 border-solid font-light text-reg w-full focus-within:ring-0"
+              className="py-3 border-b border-0 border-gray-300 border-solid w-full focus-within:ring-0"
               dateFormat="MMMM d"
             />
           </div>
@@ -82,8 +82,8 @@ const ReserveCard = ({ openTime, closeTime }: { openTime: string; closeTime: str
           </div>
         </div>
 
-        <button className="p-3 w-full bg-red-400 rounded-sm md:text-xl text-red-50 active:scale-95 transition-all duration-200 mt-5">
-          Find a team
+        <button className="p-3 w-full bg-teal-400 rounded-sm md:text-xl text-red-50 active:scale-95 transition-all duration-200 mt-5">
+          Find a time
         </button>
       </div>
       {/* RESERVATION CARD */}

@@ -79,7 +79,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
       {/* <!-- Modal toggle --> */}
       <button
         className={`active:scale-95 transition-all duration-200 px-4 py-1.5 rounded ${
-          isSignin ? 'border-primary' : 'bg-teal-600 text-teal-50'
+          isSignin ? 'border-primary' : 'bg-teal-400 text-teal-50'
         } `}
         type="button"
         onClick={handleOpen}
