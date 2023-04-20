@@ -1,6 +1,6 @@
+import { useContext } from 'react';
 import { AuthContext } from '@/app/context/AuthContext';
 import axios from 'axios';
-import { useContext } from 'react';
 import { removeCookies } from 'cookies-next';
 
 const useAuth = () => {
@@ -8,7 +8,6 @@ const useAuth = () => {
 
   const signIn = async ({ email, password }: { email: string; password: string }) => {
     setAuthState({ loading: true, error: null, data: null });
-
     try {
       const res = await axios.post('http://localhost:3000/api/auth/signin', { email, password });
       setAuthState({ loading: false, error: null, data: res.data.data });
@@ -50,7 +49,6 @@ const useAuth = () => {
 
   const signOut = () => {
     removeCookies('jwt');
-
     setAuthState({ loading: false, error: null, data: null });
   };
 

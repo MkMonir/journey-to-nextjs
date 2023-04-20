@@ -15,23 +15,21 @@ const Navbar = () => {
         AddaKhana
       </Link>
 
-      {loading ? null : (
-        <>
-          {data ? (
-            <button
-              className="active:scale-95 transition-all duration-200 px-4 py-1.5 rounded bg-teal-400 text-teal-50 border-primary"
-              onClick={signOut}
-            >
-              Sign out
-            </button>
-          ) : (
-            <div className="flex gap-2">
-              <Modal isSignin={false} />
-              <Modal isSignin={true} />
-            </div>
-          )}
-        </>
-      )}
+      <>
+        {data ? (
+          <button
+            className="active:scale-95 transition-all duration-200 px-4 py-1.5 rounded bg-teal-400 text-teal-50 border-primary"
+            onClick={signOut}
+          >
+            Sign out
+          </button>
+        ) : (
+          <div className="flex gap-2">
+            <Modal isSignin={false} />
+            <Modal isSignin={true} />
+          </div>
+        )}
+      </>
     </nav>
   );
 };

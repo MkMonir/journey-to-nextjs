@@ -36,14 +36,14 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   const [authState, setAuthState] = useState<State>(intialState);
 
   const fetchUser = async () => {
-    setAuthState({ loading: true, error: null, data: null });
-
     try {
+      setAuthState({ loading: true, error: null, data: null });
       const jwt = getCookie('jwt');
 
       if (!jwt) {
         return setAuthState({ loading: false, error: null, data: null });
       }
+
       const res = await axios.get('http://localhost:3000/api/auth/me', {
         headers: {
           Authorization: `Bearer ${jwt}`,
@@ -52,7 +52,6 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
       axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
       setAuthState({ loading: false, error: null, data: res.data.data });
     } catch (err: any) {
-      console.log(err);
       setAuthState({ loading: false, error: err.response.data.message, data: null });
     }
   };

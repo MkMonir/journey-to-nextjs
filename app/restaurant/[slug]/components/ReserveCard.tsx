@@ -1,3 +1,5 @@
+import { partySize } from '@/data';
+
 const ReserveCard = () => {
   return (
     <div className="w-full lg:w-[27%] relative">
@@ -12,26 +14,23 @@ const ReserveCard = () => {
             id="party"
             className="py-3 border-b border-0 border-gray-300 border-solid font-light"
           >
-            <option value="1">1</option>
-            <option value="3">2</option>
+            {partySize.map((party, i) => (
+              <option key={i} value={party.value}>
+                {party.label}
+              </option>
+            ))}
           </select>
         </div>
 
         <div className="flex flex-col  justify-between">
           <div className="flex flex-col w-full">
             <label htmlFor="date">Date</label>
-            <input
-              type="date"
-              className="py-3 border-b border-0 border-gray-300 border-solid"
-            />
+            <input type="date" className="py-3 border-b border-0 border-gray-300 border-solid" />
           </div>
 
           <div className="flex flex-col w-full">
             <label htmlFor="time">Time</label>
-            <select
-              id="time"
-              className="py-3 border-b border-0 border-gray-300 border-solid "
-            >
+            <select id="time" className="py-3 border-b border-0 border-gray-300 border-solid ">
               <option value="1">8</option>
               <option value="3">9</option>
             </select>

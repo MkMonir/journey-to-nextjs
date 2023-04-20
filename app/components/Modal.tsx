@@ -20,7 +20,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
     password: '',
   });
   const [disabled, setDisabled] = useState(true);
-  const { error, loading, data } = useContext(AuthContext);
+  const { error, loading, setAuthState } = useContext(AuthContext);
 
   useEffect(() => {
     if (isSignin) {
@@ -48,12 +48,12 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
   };
 
   const handleClose = (e: any) => {
-    if (!modalRef.current) {
-      return;
-    }
+    if (!modalRef.current) return;
+
     if (!modalRef.current.contains(e.target)) {
+      setOpen(false);
       setFormData({ first_name: '', last_name: '', city: '', phone: '', email: '', password: '' });
-      return setOpen(false);
+      setAuthState({ loading: false, error: null, data: null });
     }
   };
 
@@ -66,6 +66,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+
     if (isSignin) {
       signIn({ email: formData.email, password: formData.password });
     } else {
@@ -104,7 +105,18 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
             <button
               type="button"
               className="absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false);
+                setFormData({
+                  first_name: '',
+                  last_name: '',
+                  city: '',
+                  phone: '',
+                  email: '',
+                  password: '',
+                });
+                setAuthState({ loading: false, error: null, data: null });
+              }}
             >
               <svg
                 aria-hidden="true"
@@ -191,7 +203,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
                 ) : (
                   <button
                     type="submit"
-                    className="w-full text-white bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:bg-gray-400"
+                    className="w-full text-white bg-teal-700 hover:bg-teal-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:bg-gray-400"
                     disabled={disabled}
                   >
                     {isSignin ? 'Login to your account' : 'Create a new account'}
