@@ -1,10 +1,9 @@
 'use client';
-
-import { partySize } from '@/data';
+import { partySize, times } from '@/data';
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 
-const ReserveCard = () => {
+const ReserveCard = ({ openTime, closeTime }: { openTime: string; closeTime: string }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [day, setDay] = useState(new Date().toISOString().split('T')[0]);
 
@@ -14,6 +13,26 @@ const ReserveCard = () => {
       return setSelectedDate(date);
     }
     return setSelectedDate(null);
+  };
+
+  const filterTimesbyOpenWindow = () => {
+    const timesInWindow: typeof times = [];
+    let isWithonWindow = false;
+
+    times.forEach((time) => {
+      if (!isWithonWindow && time.time === openTime) {
+        isWithonWindow = true;
+      }
+
+      if (isWithonWindow) {
+        timesInWindow.push(time);
+      }
+
+      if (time.time === closeTime) {
+        isWithonWindow = false;
+      }
+    });
+    return timesInWindow;
   };
 
   return (
@@ -54,8 +73,11 @@ const ReserveCard = () => {
               id="time"
               className="py-3 border-b border-0 border-gray-300 border-solid  focus-within:ring-0"
             >
-              <option value="1">8</option>
-              <option value="3">9</option>
+              {filterTimesbyOpenWindow().map((time, i) => (
+                <option value={time.time} key={i}>
+                  {time.displayTime}
+                </option>
+              ))}
             </select>
           </div>
         </div>

@@ -1,13 +1,13 @@
-import Ratting from "@/app/components/Ratting";
-import Title from "./components/Title";
-import RestaurantNavbar from "./components/RestaurantNavbar";
-import Gallary from "./components/Gallary";
-import ReviewCard from "./components/ReviewCard";
-import ReserveCard from "./components/ReserveCard";
-import Menu from "./components/Menu";
-import { Item, PrismaClient, Review } from "@prisma/client";
-import Header from "./components/Header";
-import { notFound } from "next/navigation";
+import Ratting from '@/app/components/Ratting';
+import Title from './components/Title';
+import RestaurantNavbar from './components/RestaurantNavbar';
+import Gallary from './components/Gallary';
+import ReviewCard from './components/ReviewCard';
+import ReserveCard from './components/ReserveCard';
+import Menu from './components/Menu';
+import { Item, PrismaClient, Review } from '@prisma/client';
+import Header from './components/Header';
+import { notFound } from 'next/navigation';
 
 const prisma = new PrismaClient();
 
@@ -20,6 +20,8 @@ interface Restaurant {
   mainImage: string;
   items: Item[];
   reviews: Review[];
+  open_time: string;
+  close_time: string;
 }
 
 const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
@@ -36,6 +38,8 @@ const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
       mainImage: true,
       items: true,
       reviews: true,
+      open_time: true,
+      close_time: true,
     },
   });
 
@@ -73,23 +77,19 @@ const page = async ({ params }: { params: { slug: string } }) => {
           {/* REVIEWS */}
           <section id="review">
             <h3 className="font-bold text-3xl mt-10 mb-7 border-b border-solid border-0 border-gray-300 pb-5">
-              What {restaurant.reviews.length}{" "}
-              {restaurant.reviews.length === 1 ? "Person" : "people"} are saying
+              What {restaurant.reviews.length}{' '}
+              {restaurant.reviews.length === 1 ? 'Person' : 'people'} are saying
             </h3>
           </section>
 
           {restaurant.reviews.map((review) => (
-            <ReviewCard
-              review={review}
-              key={review.id}
-              reviews={restaurant.reviews}
-            />
+            <ReviewCard review={review} key={review.id} reviews={restaurant.reviews} />
           ))}
           {/* REVIEWS */}
         </section>
         {/* DESCRIPTION */}
 
-        <ReserveCard />
+        <ReserveCard openTime={restaurant.open_time} closeTime={restaurant.close_time} />
       </div>
     </>
   );
