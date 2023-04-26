@@ -69,6 +69,15 @@ const availability = async (req: NextApiRequest, res: NextApiResponse) => {
     };
   });
 
+  searchTimesWithTables.forEach((t) => {
+    t.tables = t.tables.filter((table) => {
+      if (bookingTableObj[t.date.toISOString()]) {
+        if (bookingTableObj[t.date.toISOString()][table.id]) return false;
+      }
+      return true;
+    });
+  });
+
   return res.status(201).json({
     status: 'success',
     data: { searchTimes, bookings, bookingTableObj, tables, searchTimesWithTables },
