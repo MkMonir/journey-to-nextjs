@@ -41,7 +41,22 @@ const availability = async (req: NextApiRequest, res: NextApiResponse) => {
     }, {});
   });
 
-  return res.status(201).json({ status: 'success', data: { bookings, bookingTableObj } });
+  const restaurant = await prisma.restaurant.findUnique({
+    where: {
+      slug,
+    },
+    select: {
+      tables: true,
+    },
+  });
+
+  if (!restaurant) {
+    return res.status(400).json({ status: 'fail', message: 'Invalid data provided' });
+  }
+
+  const tables = restaurant.tables;
+
+  return res.status(201).json({ status: 'success', data: { bookings, bookingTableObj, tables } });
 };
 
 export default availability;
