@@ -1,6 +1,8 @@
 'use client';
+import Loading, { Spinner } from '@/app/components/Loading';
 import { partySize as partySizes, times } from '@/data';
 import useAvailabilities from '@/hooks/useAvailabilities';
+import Link from 'next/link';
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 
@@ -18,6 +20,7 @@ const ReserveCard = ({
   const [day, setDay] = useState(new Date().toISOString().split('T')[0]);
   const [time, setTime] = useState(openTime);
   const [partySize, setPartySize] = useState('2');
+  console.log(data);
 
   const handleChangeDate = (date: Date | null) => {
     if (date) {
@@ -106,9 +109,30 @@ const ReserveCard = ({
           className="p-3 w-full bg-teal-400 rounded-sm md:text-xl text-red-50 active:scale-95 transition-all duration-200 mt-5"
           onClick={handleClick}
         >
-          Find a time
+          {loading ? <Spinner /> : 'Find a time'}
         </button>
+
+        {data && data.length ? (
+          <div className="mt-4">
+            <p className="text-reg">Select a Time</p>
+            <div className="flex flex-wrap mt-2">
+              {data.map((time) => {
+                return time.available ? (
+                  <Link
+                    href={`/reserve/${slug}?date=${day}T${time.time}&partySize=${partySize}`}
+                    className="bg-red-600 cursor-pointer p-2 w-24 text-center text-white mb-3 rounded mr-3"
+                  >
+                    <p className="text-sm font-bold">{time.time}</p>
+                  </Link>
+                ) : (
+                  <p className="bg-gray-300 p-2 w-24 mb-3 rounded mr-3"></p>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
       </div>
+
       {/* RESERVATION CARD */}
     </div>
   );
