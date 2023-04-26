@@ -102,7 +102,7 @@ const availability = async (req: NextApiRequest, res: NextApiResponse) => {
 
   return res.status(201).json({
     status: 'success',
-    data: { searchTimes, bookings, bookingTableObj, tables, searchTimesWithTables, availabilities },
+    data: { availabilities },
   });
 };
 
