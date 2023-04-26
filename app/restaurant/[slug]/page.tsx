@@ -89,7 +89,11 @@ const page = async ({ params }: { params: { slug: string } }) => {
         </section>
         {/* DESCRIPTION */}
 
-        <ReserveCard openTime={restaurant.open_time} closeTime={restaurant.close_time} />
+        <ReserveCard
+          openTime={restaurant.open_time}
+          closeTime={restaurant.close_time}
+          slug={restaurant.slug}
+        />
       </div>
     </>
   );

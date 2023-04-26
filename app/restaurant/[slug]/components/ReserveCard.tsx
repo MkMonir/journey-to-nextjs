@@ -1,11 +1,23 @@
 'use client';
-import { partySize, times } from '@/data';
+import { partySize as partySizes, times } from '@/data';
+import useAvailabilities from '@/hooks/useAvailabilities';
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 
-const ReserveCard = ({ openTime, closeTime }: { openTime: string; closeTime: string }) => {
+const ReserveCard = ({
+  openTime,
+  closeTime,
+  slug,
+}: {
+  openTime: string;
+  closeTime: string;
+  slug: string;
+}) => {
+  const { data, loading, error, fetchAvailabilities } = useAvailabilities();
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [day, setDay] = useState(new Date().toISOString().split('T')[0]);
+  const [time, setTime] = useState(openTime);
+  const [partySize, setPartySize] = useState('2');
 
   const handleChangeDate = (date: Date | null) => {
     if (date) {
@@ -13,6 +25,10 @@ const ReserveCard = ({ openTime, closeTime }: { openTime: string; closeTime: str
       return setSelectedDate(date);
     }
     return setSelectedDate(null);
+  };
+
+  const handleClick = () => {
+    fetchAvailabilities({ slug, day, time, partySize });
   };
 
   const filterTimesbyOpenWindow = () => {
@@ -47,8 +63,10 @@ const ReserveCard = ({ openTime, closeTime }: { openTime: string; closeTime: str
           <select
             id="party"
             className="py-3 border-b border-0 border-gray-300 border-solid focus-within:ring-0"
+            onChange={(e) => setPartySize(e.target.value)}
+            value={partySize}
           >
-            {partySize.map((party, i) => (
+            {partySizes.map((party, i) => (
               <option key={i} value={party.value}>
                 {party.label}
               </option>
@@ -72,6 +90,8 @@ const ReserveCard = ({ openTime, closeTime }: { openTime: string; closeTime: str
             <select
               id="time"
               className="py-3 border-b border-0 border-gray-300 border-solid  focus-within:ring-0"
+              onChange={(e) => setTime(e.target.value)}
+              value={time}
             >
               {filterTimesbyOpenWindow().map((time, i) => (
                 <option value={time.time} key={i}>
@@ -82,7 +102,10 @@ const ReserveCard = ({ openTime, closeTime }: { openTime: string; closeTime: str
           </div>
         </div>
 
-        <button className="p-3 w-full bg-teal-400 rounded-sm md:text-xl text-red-50 active:scale-95 transition-all duration-200 mt-5">
+        <button
+          className="p-3 w-full bg-teal-400 rounded-sm md:text-xl text-red-50 active:scale-95 transition-all duration-200 mt-5"
+          onClick={handleClick}
+        >
           Find a time
         </button>
       </div>
