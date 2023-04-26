@@ -5,7 +5,12 @@ import { NextApiRequest, NextApiResponse } from 'next';
 const prisma = new PrismaClient();
 
 const availability = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { slug, day, time, partySize } = req.query;
+  const { slug, day, time, partySize } = req.query as {
+    slug: string;
+    day: string;
+    time: string;
+    partySize: string;
+  };
 
   if (!day || !time || !partySize) {
     return res.status(400).json({ status: 'fail', message: 'Invalid data provided' });
@@ -56,7 +61,18 @@ const availability = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const tables = restaurant.tables;
 
-  return res.status(201).json({ status: 'success', data: { bookings, bookingTableObj, tables } });
+  const searchTimesWithTables = searchTimes.map((searchTime) => {
+    return {
+      date: new Date(`${day}T${searchTime}`),
+      time: searchTime,
+      tables,
+    };
+  });
+
+  return res.status(201).json({
+    status: 'success',
+    data: { searchTimes, bookings, bookingTableObj, tables, searchTimesWithTables },
+  });
 };
 
 export default availability;
