@@ -1,3 +1,4 @@
+import findAvailableTables from '@/services/restaurant/findAvailableTables';
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -15,6 +16,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     where: {
       slug,
     },
+    select: {
+      tables: true,
+      open_time: true,
+      close_time: true,
+    },
   });
 
   if (!restaurant) {
@@ -28,9 +34,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({ status: 'fail', message: 'Restaurant is not open at that time' });
   }
 
+  const searchTimesWithTables = await findAvailableTables({
+    day,
+    time,
+    res,
+    restaurant,
+  });
+
+  if (!searchTimesWithTables) {
+    return res.status(400).json({
+      errorMessage: 'Invalid data provided',
+    });
+  }
+
+  const searchTimeWithTables = searchTimesWithTables.find(
+    (t) => t.date.toISOString() === new Date(`${day}T${time}`).toISOString()
+  );
+
   return res.status(201).json({
     status: 'success',
-    data: { slug, day, time, partySize },
+    data: searchTimeWithTables,
   });
 };
 
