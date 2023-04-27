@@ -51,9 +51,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     (t) => t.date.toISOString() === new Date(`${day}T${time}`).toISOString()
   );
 
+  const tablesCount: { 2: number[]; 4: number[] } = { 2: [], 4: [] };
+
+  searchTimeWithTables?.tables.forEach((table) => {
+    if (table.seats === 2) {
+      tablesCount[2].push(table.id);
+    } else {
+      tablesCount[4].push(table.id);
+    }
+  });
+
   return res.status(201).json({
     status: 'success',
-    data: searchTimeWithTables,
+    data: tablesCount,
   });
 };
 
