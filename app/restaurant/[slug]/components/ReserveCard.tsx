@@ -16,7 +16,7 @@ const ReserveCard = ({
   closeTime: string;
   slug: string;
 }) => {
-  const { data, loading, error, fetchAvailabilities } = useAvailabilities();
+  const { data, loading, fetchAvailabilities } = useAvailabilities();
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [day, setDay] = useState(new Date().toISOString().split('T')[0]);
   const [time, setTime] = useState(openTime);
@@ -82,6 +82,7 @@ const ReserveCard = ({
             <label htmlFor="">Date</label>
             <DatePicker
               selected={selectedDate}
+              minDate={new Date()}
               onChange={handleChangeDate}
               className="py-3 border-b border-0 border-gray-300 border-solid w-full focus-within:ring-0"
               dateFormat="MMMM d"
@@ -116,11 +117,12 @@ const ReserveCard = ({
           <div className="mt-4">
             <p className="text-reg">Select a Time</p>
             <div className="flex flex-wrap mt-2">
-              {data.map((time) => {
+              {data.map((time, i) => {
                 return time.available ? (
                   <Link
                     href={`/reserve/${slug}?date=${day}T${time.time}&partySize=${partySize}`}
                     className="bg-red-600 cursor-pointer p-2 w-24 text-center text-white mb-3 rounded mr-3"
+                    key={i}
                   >
                     <p className="text-sm font-bold">{convertToDisplayTime(time.time as Time)}</p>
                   </Link>
