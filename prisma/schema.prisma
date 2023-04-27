@@ -81,7 +81,7 @@ model Review{
 
 model Booking{
   id          Int    @id   @default(autoincrement())
-  number_of_peaple Int
+  number_of_people Int
   booking_time     DateTime
   booker_first_name String
   booker_last_name String

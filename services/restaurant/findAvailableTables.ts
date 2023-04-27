@@ -32,7 +32,7 @@ const findAvailableTables = async ({
       },
     },
     select: {
-      number_of_peaple: true,
+      number_of_people: true,
       booking_time: true,
       tables: true,
     },
