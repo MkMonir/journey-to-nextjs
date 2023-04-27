@@ -2,6 +2,7 @@
 import Loading, { Spinner } from '@/app/components/Loading';
 import { partySize as partySizes, times } from '@/data';
 import useAvailabilities from '@/hooks/useAvailabilities';
+import { Time, convertToDisplayTime } from '@/utils/convertToDisplayTime';
 import Link from 'next/link';
 import { useState } from 'react';
 import DatePicker from 'react-datepicker';
@@ -20,7 +21,6 @@ const ReserveCard = ({
   const [day, setDay] = useState(new Date().toISOString().split('T')[0]);
   const [time, setTime] = useState(openTime);
   const [partySize, setPartySize] = useState('2');
-  console.log(data);
 
   const handleChangeDate = (date: Date | null) => {
     if (date) {
@@ -122,7 +122,7 @@ const ReserveCard = ({
                     href={`/reserve/${slug}?date=${day}T${time.time}&partySize=${partySize}`}
                     className="bg-red-600 cursor-pointer p-2 w-24 text-center text-white mb-3 rounded mr-3"
                   >
-                    <p className="text-sm font-bold">{time.time}</p>
+                    <p className="text-sm font-bold">{convertToDisplayTime(time.time as Time)}</p>
                   </Link>
                 ) : (
                   <p className="bg-gray-300 p-2 w-24 mb-3 rounded mr-3"></p>
