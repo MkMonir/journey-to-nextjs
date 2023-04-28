@@ -1,9 +1,11 @@
 'use client';
 
+import { Spinner } from '@/app/components/Loading';
 import useReservation from '@/hooks/useReservation';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const Form = () => {
+const Form = ({ partySize, date, slug }: { partySize: string; date: string; slug: string }) => {
   const [bookerdata, setBookerdata] = useState({
     booker_first_name: '',
     booker_last_name: '',
@@ -14,6 +16,8 @@ const Form = () => {
   });
   const [disabled, setDisabled] = useState(true);
   const { createReservation, loading, error } = useReservation();
+
+  const [day, time] = date?.split('T');
 
   useEffect(() => {
     if (
@@ -31,8 +35,26 @@ const Form = () => {
     setBookerdata({ ...bookerdata, [e.target.id]: e.target.value });
   };
 
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const booking = await createReservation({
+      slug,
+      day,
+      time,
+      partySize,
+      booker_first_name: bookerdata.booker_first_name,
+      booker_last_name: bookerdata.booker_last_name,
+      booker_email: bookerdata.booker_email,
+      booker_phone: bookerdata.booker_phone,
+      booker_occasion: bookerdata.booker_occasion,
+      booker_request: bookerdata.booker_request,
+    });
+  };
+
   return (
-    <div className="mt-10 flex gap-5 flex-wrap justify-between w-[660px]">
+    <form onSubmit={handleSubmit} className="mt-10 flex gap-5 flex-wrap justify-between w-[660px]">
+      {error}
       {/* FORM */}
       <input
         type="text"
@@ -86,12 +108,12 @@ const Form = () => {
       <button
         type="submit"
         className="bg-teal-600 w-full p-3 text-white font-medium rounded disabled:bg-gray-300 active:scale-[0.95] transition-all duration-300"
-        disabled={disabled}
+        disabled={disabled || loading}
       >
-        Complete Reservation
+        {loading ? <Spinner /> : 'Complete Reservation'}
       </button>
       {/* FORM */}
-    </div>
+    </form>
   );
 };
 

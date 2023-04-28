@@ -36,7 +36,7 @@ const page = async ({
           date={searchParams.date}
           partySize={searchParams.partySize}
         />
-        <Form />
+        <Form partySize={searchParams.partySize} date={searchParams.date} slug={params.name} />
       </div>
     </div>
   );

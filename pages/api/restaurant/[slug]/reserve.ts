@@ -56,7 +56,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (!searchTimesWithTables) {
       return res.status(400).json({
-        errorMessage: 'Invalid data provided',
+        status: 'fail',
+        message: 'Invalid data provided',
       });
     }
 
