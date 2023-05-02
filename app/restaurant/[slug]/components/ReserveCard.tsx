@@ -1,11 +1,11 @@
-'use client';
-import Loading, { Spinner } from '@/app/components/Loading';
-import { partySize as partySizes, times } from '@/data';
-import useAvailabilities from '@/hooks/useAvailabilities';
-import { Time, convertToDisplayTime } from '@/utils/convertToDisplayTime';
-import Link from 'next/link';
-import { useState } from 'react';
-import DatePicker from 'react-datepicker';
+"use client";
+import { Spinner } from "@/app/components/Loading";
+import { partySize as partySizes, times } from "@/data";
+import useAvailabilities from "@/hooks/useAvailabilities";
+import { Time, convertToDisplayTime } from "@/utils/convertToDisplayTime";
+import Link from "next/link";
+import { useState } from "react";
+import DatePicker from "react-datepicker";
 
 const ReserveCard = ({
   openTime,
@@ -18,13 +18,13 @@ const ReserveCard = ({
 }) => {
   const { data, loading, fetchAvailabilities } = useAvailabilities();
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [day, setDay] = useState(new Date().toISOString().split('T')[0]);
+  const [day, setDay] = useState(new Date().toISOString().split("T")[0]);
   const [time, setTime] = useState(openTime);
-  const [partySize, setPartySize] = useState('2');
+  const [partySize, setPartySize] = useState("2");
 
   const handleChangeDate = (date: Date | null) => {
     if (date) {
-      setDay(date.toISOString().split('T')[0]);
+      setDay(date.toISOString().split("T")[0]);
       return setSelectedDate(date);
     }
     return setSelectedDate(null);
@@ -55,7 +55,7 @@ const ReserveCard = ({
   };
 
   return (
-    <div className="w-full lg:w-[27%] relative">
+    <div className="w-full lg:w-[29%] relative">
       {/* RESERVATION CARD */}
       <div className="sticky top-0 w-full bg-white rounded-sm p-3 shadow-md">
         <div className="text-center border-b border-0 border-solid border-gray-300 pb-2 font-bold">
@@ -110,7 +110,7 @@ const ReserveCard = ({
           className="p-3 w-full bg-teal-400 rounded-sm md:text-xl text-red-50 active:scale-95 transition-all duration-200 mt-5"
           onClick={handleClick}
         >
-          {loading ? <Spinner /> : 'Find a time'}
+          {loading ? <Spinner /> : "Find a time"}
         </button>
 
         {data && data.length ? (
@@ -124,7 +124,9 @@ const ReserveCard = ({
                     className="bg-red-600 cursor-pointer p-2 w-24 text-center text-white mb-3 rounded mr-3"
                     key={i}
                   >
-                    <p className="text-sm font-bold">{convertToDisplayTime(time.time as Time)}</p>
+                    <p className="text-sm font-bold">
+                      {convertToDisplayTime(time.time as Time)}
+                    </p>
                   </Link>
                 ) : (
                   <p className="bg-gray-300 p-2 w-24 mb-3 rounded mr-3"></p>

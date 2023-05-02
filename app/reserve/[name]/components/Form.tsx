@@ -1,23 +1,30 @@
-'use client';
+"use client";
 
-import { Spinner } from '@/app/components/Loading';
-import useReservation from '@/hooks/useReservation';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { Spinner } from "@/app/components/Loading";
+import useReservation from "@/hooks/useReservation";
+import { useEffect, useState } from "react";
 
-const Form = ({ partySize, date, slug }: { partySize: string; date: string; slug: string }) => {
+const Form = ({
+  partySize,
+  date,
+  slug,
+}: {
+  partySize: string;
+  date: string;
+  slug: string;
+}) => {
   const [bookerdata, setBookerdata] = useState({
-    booker_first_name: '',
-    booker_last_name: '',
-    booker_phone: '',
-    booker_email: '',
-    booker_occasion: '',
-    booker_request: '',
+    booker_first_name: "",
+    booker_last_name: "",
+    booker_phone: "",
+    booker_email: "",
+    booker_occasion: "",
+    booker_request: "",
   });
   const [disabled, setDisabled] = useState(true);
   const { createReservation, loading, error } = useReservation();
 
-  const [day, time] = date?.split('T');
+  const [day, time] = date?.split("T");
 
   useEffect(() => {
     if (
@@ -53,7 +60,10 @@ const Form = ({ partySize, date, slug }: { partySize: string; date: string; slug
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-10 flex gap-5 flex-wrap justify-between w-[660px]">
+    <form
+      onSubmit={handleSubmit}
+      className="mt-10 flex gap-5 flex-wrap justify-between w-[660px]"
+    >
       {error}
       {/* FORM */}
       <input
@@ -110,7 +120,7 @@ const Form = ({ partySize, date, slug }: { partySize: string; date: string; slug
         className="bg-teal-600 w-full p-3 text-white font-medium rounded disabled:bg-gray-300 active:scale-[0.95] transition-all duration-300"
         disabled={disabled || loading}
       >
-        {loading ? <Spinner /> : 'Complete Reservation'}
+        {loading ? <Spinner /> : "Complete Reservation"}
       </button>
       {/* FORM */}
     </form>

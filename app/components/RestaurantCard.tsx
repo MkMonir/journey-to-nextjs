@@ -36,7 +36,11 @@ const RestaurantCard = ({ restaurant }: Props) => {
           <p>{restaurant.location.name}</p>
         </div>
 
-        <p className="mt-1 text-base font-medium">Books 3 times today</p>
+        <p className="mt-1 text-base font-medium">
+          {restaurant.bookings.length
+            ? `Books ${restaurant.bookings.length} times today`
+            : ""}
+        </p>
       </div>
     </Link>
   );
