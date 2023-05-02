@@ -123,6 +123,18 @@ const Form = ({
         {loading ? <Spinner /> : "Complete Reservation"}
       </button>
       {/* FORM */}
+      <p className="text-xs text-gray-600">
+        By clicking “Complete reservation” you agree to the{" "}
+        <span className="text-red-500 hover:underline cursor-pointer">
+          OpenTable Terms of Use
+        </span>{" "}
+        and{" "}
+        <span className="text-red-500 hover:underline cursor-pointer">
+          Privacy Policy.
+        </span>
+        Standard text message rates may apply. You may opt out of receiving text
+        messages at any time.
+      </p>
     </form>
   );
 };

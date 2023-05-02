@@ -33,15 +33,15 @@ const Navbar = () => {
   const profileItems = [
     {
       text: "My Profile",
-      link: "",
+      link: "/user/dining-dashboard",
     },
     {
       text: "My Dining History",
-      link: "",
+      link: "/user/dining-dashboard",
     },
     {
       text: " My Saved Restaurants",
-      link: "",
+      link: "/user/favorites",
     },
   ];
 
