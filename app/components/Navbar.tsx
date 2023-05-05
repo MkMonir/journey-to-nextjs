@@ -6,6 +6,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import useAuth from "@/hooks/useAuth";
 import avatar from "./../../public/icons/avatar.png";
+import calender from "./../../public/icons/calender.png";
 import Image from "next/image";
 
 const Navbar = () => {
@@ -56,12 +57,15 @@ const Navbar = () => {
 
       <>
         {data ? (
-          <div className="relative" ref={profileRef}>
+          <div className="relative flex gap-4" ref={profileRef}>
             <button
               className="w-10 h-10 bg-gray-100 rounded-full grid place-items-center border-primary"
               onClick={() => setProfileOpen((prev) => !prev)}
             >
               <Image src={avatar} alt="" className="w-8 h-8" />
+            </button>
+            <button>
+              <Image src={calender} alt="" className="w-7 h-7" />
             </button>
 
             {/* <!-- Dropdown menu --> */}
