@@ -4,14 +4,24 @@ interface Props {
   type: string;
   label: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
+  value: string | undefined;
 }
 
-const Input = ({ id, placeholder, type, label, handleChange, value }: Props) => {
+const Input = ({
+  id,
+  placeholder,
+  type,
+  label,
+  handleChange,
+  value,
+}: Props) => {
   return (
     <div>
       {label && (
-        <label htmlFor={id} className="block mb-2 text-sm font-medium text-gray-900">
+        <label
+          htmlFor={id}
+          className="block mb-2 text-sm font-medium text-gray-900"
+        >
           {label}
         </label>
       )}

@@ -5,7 +5,7 @@ import { AuthContext } from "@/app/context/AuthContext";
 import { useContext, useEffect, useState } from "react";
 
 const Form = () => {
-  const { data } = useContext(AuthContext);
+  const { data, loading } = useContext(AuthContext);
 
   const [updateUserData, setUpdateUserData] = useState({
     first_name: "",
@@ -14,10 +14,30 @@ const Form = () => {
     phone: "",
     city: "",
   });
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
-    setUpdateUserData({ ...updateUserData, ...data });
-  }, [data]);
+    if (!loading) {
+      setUpdateUserData({ ...updateUserData, ...data });
+    }
+  }, [loading]);
+
+  useEffect(() => {
+    function compareObjects(obj1: any, obj2: any) {
+      for (let key in obj1) {
+        if (obj1[key] !== obj2[key]) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    if (compareObjects(data, updateUserData)) {
+      return setDisabled(true);
+    }
+
+    return setDisabled(false);
+  }, [updateUserData]);
 
   const handleChange = (e: any) => {
     setUpdateUserData({ ...updateUserData, [e.target.id]: e.target.value });
@@ -69,7 +89,10 @@ const Form = () => {
           value={updateUserData?.city}
         />
 
-        <button className="w-full text-center block bg-teal-500 py-3.5 text-teal-50 rounded-md text-lg active:scale-95 transition-all duration-200">
+        <button
+          className="w-full text-center block bg-teal-500 py-3.5 text-teal-50 rounded-md text-lg active:scale-95 transition-all duration-200 disabled:bg-gray-300"
+          disabled={disabled}
+        >
           Save Changes
         </button>
       </form>

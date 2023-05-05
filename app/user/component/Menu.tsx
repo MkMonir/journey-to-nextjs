@@ -4,15 +4,15 @@ const Menu = () => {
   const profileItems = [
     {
       text: "Reservations",
-      link: "",
+      link: "/user/dining-dashboard",
     },
     {
       text: "Saved Restaurant",
-      link: "",
+      link: "/user/favorites",
     },
     {
       text: "Account Details",
-      link: "/user/profile/edit",
+      link: "/user/profile",
     },
   ];
 

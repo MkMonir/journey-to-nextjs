@@ -1,5 +1,5 @@
-import Menu from "./dining-dashboard/components/Menu";
-import Title from "./dining-dashboard/components/Title";
+import Menu from "./component/Menu";
+import Title from "./component/Title";
 
 function layout({ children }: { children: React.ReactNode }) {
   return (
