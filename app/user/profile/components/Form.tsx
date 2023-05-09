@@ -1,13 +1,17 @@
 "use client";
 
 import Input from "@/app/components/Input";
+import { Spinner } from "@/app/components/Loading";
 import { AuthContext } from "@/app/context/AuthContext";
+import useAuth from "@/hooks/useAuth";
 import { useContext, useEffect, useState } from "react";
 
 const Form = () => {
   const { data, loading } = useContext(AuthContext);
+  const { updateUser } = useAuth();
 
   const [updateUserData, setUpdateUserData] = useState({
+    id: 0,
     first_name: "",
     last_name: "",
     email: "",
@@ -43,11 +47,17 @@ const Form = () => {
     setUpdateUserData({ ...updateUserData, [e.target.id]: e.target.value });
   };
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    updateUser(updateUserData);
+  };
+
   return (
     <div>
       <h4 className="text-3xl font-medium mb-6">About Me</h4>
 
-      <form className="space-y-8">
+      <form className="space-y-8" onSubmit={handleSubmit}>
         <Input
           type="text"
           placeholder="first name"
@@ -90,10 +100,11 @@ const Form = () => {
         />
 
         <button
+          type="submit"
           className="w-full text-center block bg-teal-500 py-3.5 text-teal-50 rounded-md text-lg active:scale-95 transition-all duration-200 disabled:bg-gray-300"
           disabled={disabled}
         >
-          Save Changes
+          {loading ? <Spinner /> : "Save Changes"}
         </button>
       </form>
     </div>
