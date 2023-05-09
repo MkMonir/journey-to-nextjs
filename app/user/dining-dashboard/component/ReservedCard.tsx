@@ -28,7 +28,7 @@ const ReservedCard = ({
 
   return (
     <>
-      {booking.booker_email === data?.email && booking ? (
+      {booking.booker_email === data?.email ? (
         <Link
           href={`/restaurant/${booking.restaurant.slug}`}
           className="block p-4 border-primary rounded-md hover:shadow-md translate-all duration-300 ease-in-out "
@@ -66,7 +66,7 @@ const ReservedCard = ({
           </div>
         </Link>
       ) : (
-        <h4>You have no upcoming reservations</h4>
+        ""
       )}
     </>
   );
