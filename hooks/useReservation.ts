@@ -1,9 +1,11 @@
-import axios from 'axios';
-import { useState } from 'react';
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const useReservation = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   const createReservation = async ({
     slug,
@@ -42,6 +44,10 @@ const useReservation = () => {
         }
       );
       setLoading(false);
+
+      if (res.data.status === "success") {
+        router.push("/user/dining-dashboard");
+      }
       return res.data;
     } catch (err: any) {
       setLoading(false);
