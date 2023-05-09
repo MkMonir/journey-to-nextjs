@@ -5,13 +5,11 @@ import Modal from "./Modal";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import useAuth from "@/hooks/useAuth";
-import avatar from "./../../public/icons/avatar.png";
-import calender from "./../../public/icons/calender.png";
-import exterior from "./../../public/icons/exterior.png";
+// import avatar from "/icons/avatar.png";
+// import calender from "/icons/calender.png";
+// import exterior from "/icons/exterior.png";
 import Image from "next/image";
 import { Restaurant } from "@prisma/client";
-import format from "date-fns/format";
-import da from "date-fns/esm/locale/da/index.js";
 
 const Navbar = ({
   bookings,
@@ -77,7 +75,7 @@ const Navbar = ({
 
       <>
         {data ? (
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             {/* Profile */}
             <div className="relative" ref={profileRef}>
               <button
@@ -87,7 +85,13 @@ const Navbar = ({
                   setReserveOpen(false);
                 }}
               >
-                <Image src={avatar} alt="" className="w-8 h-8" />
+                <Image
+                  src="/icons/avatar.png"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="w-8 h-8"
+                />
               </button>
 
               {/* <!-- Dropdown menu --> */}
@@ -128,12 +132,19 @@ const Navbar = ({
             {/* Reservations */}
             <div className="relative" ref={reserveRef}>
               <button
+                className="block"
                 onClick={() => {
                   setReserveOpen((prev) => !prev);
                   setProfileOpen(false);
                 }}
               >
-                <Image src={calender} alt="" className="w-7 h-7" />
+                <Image
+                  src="/icons/calender.png"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="w-7 h-7"
+                />
               </button>
               <div
                 className={`z-10 absolute top-12 -right-2 bg-white divide-y divide-solid divide-x-0 divide-gray-100 rounded-lg shadow w-96 p-3 text-gray-800 border-primary ${
@@ -148,14 +159,16 @@ const Navbar = ({
                 <div className="flex flex-col gap-5 divide-y divide-solid divide-x-0 divide-gray-100 py-3 max-h-[60vh] overflow-y-scroll">
                   {bookings.length &&
                     bookings.map((booking) => (
-                      <>
+                      <div key={booking.id}>
                         {booking.booker_email === data.email ? (
-                          <ul className="space-y-1 pt-3" key={booking.id}>
+                          <ul className="space-y-1 pt-3">
                             <li className="flex gap-3">
                               <div className="bg-gray-800 w-10 h-10 rounded-full grid place-items-center">
                                 <Image
-                                  src={exterior}
+                                  src="/icons/exterior.png"
                                   alt=""
+                                  width={20}
+                                  height={20}
                                   className="w-6 h-6"
                                 />
                               </div>
@@ -166,8 +179,10 @@ const Navbar = ({
                                 </li>
                                 <li className="flex gap-1">
                                   <Image
-                                    src={avatar}
+                                    src="/icons/avatar.png"
                                     alt=""
+                                    width={20}
+                                    height={20}
                                     className="w-6 h-6"
                                   />
                                   <p>
@@ -178,7 +193,12 @@ const Navbar = ({
                                   </p>
                                 </li>
                                 <li className="flex gap-1">
-                                  <Image src={calender} alt="" />
+                                  <Image
+                                    src="/icons/calender.png"
+                                    width={20}
+                                    height={20}
+                                    alt=""
+                                  />
 
                                   <p>
                                     {new Date(booking.booking_time)
@@ -199,7 +219,7 @@ const Navbar = ({
                         ) : (
                           ""
                         )}
-                      </>
+                      </div>
                     ))}
                 </div>
               </div>
