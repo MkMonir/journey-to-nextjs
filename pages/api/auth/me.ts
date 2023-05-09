@@ -1,19 +1,22 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from "next";
 
-import jwt from 'jsonwebtoken';
-import { PrismaClient } from '@prisma/client';
+import jwt from "jsonwebtoken";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const bearerToken = req.headers['authorization'] as string;
-  const token = bearerToken.split(' ')[1];
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const bearerToken = req.headers["authorization"] as string;
+  const token = bearerToken.split(" ")[1];
 
   const payload = jwt.decode(token) as { email: string };
 
   if (!payload.email) {
     return res.status(401).json({
-      errorMessage: 'Unauthorized request',
+      message: "Unauthorized request",
     });
   }
 
@@ -21,18 +24,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     where: {
       email: payload.email,
     },
+    select: {
+      email: true,
+      first_name: true,
+      last_name: true,
+      city: true,
+      phone: true,
+      id: true,
+    },
   });
 
   if (!user) {
     return res.status(401).json({
-      errorMessage: 'User not found',
+      message: "User not found",
     });
   }
 
   user.password = undefined;
 
   return res.status(201).json({
-    status: 'success',
+    status: "success",
     data: user,
   });
 }
