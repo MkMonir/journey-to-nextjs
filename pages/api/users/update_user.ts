@@ -1,12 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import validator from "validator";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { setCookie } from "cookies-next";
 
 const prisma = new PrismaClient();
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "PATCH") {
-    const { first_name, last_name, email, city, phone } = req.body;
+    const { first_name, last_name, email, city, phone, id } = req.body;
 
     const errors: string[] = [];
 
@@ -54,23 +57,44 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       });
     }
 
-    const userExist = await prisma.user.findUnique({ where: { email } });
+    const updateUser = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        first_name,
+        last_name,
+        email,
+        city,
+        phone,
+      },
+      select: {
+        first_name: true,
+        last_name: true,
+        email: true,
+        city: true,
+        phone: true,
+      },
+    });
 
-    if (!userExist) {
+    if (!updateUser) {
       return res.status(400).json({
         status: "fail",
-        message: "User does not exist",
+        message: "Invalid Data Provided",
       });
     }
 
+    const token = jwt.sign({ email }, process.env.JWT_SECRET ?? "", {
+      expiresIn: "10d",
+    });
+
+    setCookie("jwt", token, { res, req, maxAge: 60 * 60 * 7 * 24 });
+
     res.status(200).json({
       status: "success",
+      message: "User updated successfully",
       data: {
-        email,
-        first_name,
-        last_name,
-        phone,
-        city,
+        updateUser,
       },
     });
   }
