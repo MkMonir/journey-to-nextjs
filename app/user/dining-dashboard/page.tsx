@@ -26,9 +26,15 @@ const page = async () => {
         <h4 className="text-2xl font-medium">Upcoming reservations</h4>
       </div>
 
-      {bookings.map((booking, i) => (
-        <ReservedCard booking={booking} key={i} />
-      ))}
+      {bookings ? (
+        <>
+          {bookings.map((booking, i) => (
+            <ReservedCard booking={booking} key={i} />
+          ))}
+        </>
+      ) : (
+        <h4>You have no upcoming reservations</h4>
+      )}
     </div>
   );
 };
