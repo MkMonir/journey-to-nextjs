@@ -28,6 +28,7 @@ model Restaurant{
   reviews Review[]
   bookings  Booking[]
   tables    Table[]
+  favorites Favourite[]
 
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
@@ -128,6 +129,15 @@ model User{
   password    String
   phone       String
   reviews Review[]
+
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Favourite{
+  id          Int    @id   @default(autoincrement())
+  restaurant_id    Int
+  restaurant  Restaurant @relation(fields: [restaurant_id],references: [id])
 
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
