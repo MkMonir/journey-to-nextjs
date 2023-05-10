@@ -29,7 +29,10 @@ const page = async () => {
       {bookings ? (
         <>
           {bookings.map((booking, i) => (
-            <ReservedCard booking={booking} key={i} />
+            <>
+              {new Date().getDate() - new Date(booking.booking_time).getDate() <
+                0 && <ReservedCard booking={booking} key={i} />}
+            </>
           ))}
         </>
       ) : (
