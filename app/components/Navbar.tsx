@@ -2,12 +2,9 @@
 
 import Link from "next/link";
 import Modal from "./Modal";
-import { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import useAuth from "@/hooks/useAuth";
-// import avatar from "/icons/avatar.png";
-// import calender from "/icons/calender.png";
-// import exterior from "/icons/exterior.png";
 import Image from "next/image";
 import { Restaurant } from "@prisma/client";
 
@@ -159,8 +156,11 @@ const Navbar = ({
                 <div className="flex flex-col gap-5 divide-y divide-solid divide-x-0 divide-gray-100 py-3 max-h-[60vh] overflow-y-scroll">
                   {bookings.length &&
                     bookings.map((booking) => (
-                      <div key={booking.id}>
-                        {booking.booker_email === data.email ? (
+                      <React.Fragment key={booking.id}>
+                        {booking.booker_email === data.email &&
+                        new Date().getDate() -
+                          new Date(booking.booking_time).getDate() <
+                          0 ? (
                           <ul className="space-y-1 pt-3">
                             <li className="flex gap-3">
                               <div className="bg-gray-800 w-10 h-10 rounded-full grid place-items-center">
@@ -219,7 +219,7 @@ const Navbar = ({
                         ) : (
                           ""
                         )}
-                      </div>
+                      </React.Fragment>
                     ))}
                 </div>
               </div>
