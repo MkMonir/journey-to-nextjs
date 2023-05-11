@@ -28,7 +28,11 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
   return (
     <div className="border-bottom py-5 flex">
       {/* RESTAURANT CARD */}
-      <img src={restaurant.mainImage} alt="" className="w-48 h-44 rounded-md" />
+      <img
+        src={restaurant.mainImage}
+        alt=""
+        className="w-48 h-44 rounded-md object-cover"
+      />
 
       <div className="pl-5">
         <h2 className="text-3xl">{restaurant.name}</h2>
