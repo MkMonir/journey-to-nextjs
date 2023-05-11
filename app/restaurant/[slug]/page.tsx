@@ -56,7 +56,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
 
   return (
     <>
-      <Header image={restaurant.mainImage} />
+      <Header restaurant={restaurant} />
       <div className="flex flex-col-reverse gap-5 lg:flex-row justify-between m-auto w-2/3 -mt-14">
         {/* DESCRIPTION */}
         <section
