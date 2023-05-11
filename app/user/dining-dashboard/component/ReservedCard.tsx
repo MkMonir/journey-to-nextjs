@@ -37,7 +37,7 @@ const ReservedCard = ({
             <img
               src={booking.restaurant.mainImage}
               alt=""
-              className="w-[20%] h-32 rounded-md"
+              className="w-[20%] h-32 rounded-md object-cover"
             />
 
             <div className="w-[80%] space-y-2">
