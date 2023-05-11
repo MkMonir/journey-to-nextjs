@@ -1,9 +1,9 @@
-import { PrismaClient } from '@prisma/client';
-import { NextApiRequest, NextApiResponse } from 'next';
-import validator from 'validator';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { setCookie } from 'cookies-next';
+import { PrismaClient } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from "next";
+import validator from "validator";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { setCookie } from "cookies-next";
 
 const prisma = new PrismaClient();
 
@@ -14,11 +14,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const validationSchema = [
     {
       valid: validator.isEmail(email),
-      errorMessage: 'Email address is invalid',
+      errorMessage: "Email address is invalid",
     },
     {
       valid: validator.isLength(password, { min: 1 }),
-      errorMessage: 'Password invalid',
+      errorMessage: "Password invalid",
     },
   ];
 
@@ -30,7 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (errors.length) {
     return res.status(400).json({
-      status: 'fail',
+      status: "fail",
       message: errors[0],
     });
   }
@@ -39,36 +39,38 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!user) {
     return res.status(400).json({
-      status: 'fail',
-      message: 'Incorrect email or password',
+      status: "fail",
+      message: "Incorrect email or password",
     });
   }
 
-  const passwordCarrect = await bcrypt.compare(password, user.password);
+  const passwordCorrect = await bcrypt.compare(password, user.password);
 
-  if (!passwordCarrect) {
+  if (!passwordCorrect) {
     return res.status(400).json({
-      status: 'fail',
-      message: 'Incorrect email or password',
+      status: "fail",
+      message: "Incorrect email or password",
     });
   }
 
-  const token = jwt.sign({ email }, process.env.JWT_SECRET ?? '', { expiresIn: '10d' });
+  const token = jwt.sign({ email }, process.env.JWT_SECRET ?? "", {
+    expiresIn: "10d",
+  });
 
   user.password = undefined;
 
-  setCookie('jwt', token, { res, req, maxAge: 60 * 60 * 7 * 24 });
+  setCookie("jwt", token, { res, req, maxAge: 60 * 60 * 7 * 24 });
 
-  if (req.method === 'POST') {
+  if (req.method === "POST") {
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: user,
     });
   }
 
   return res.status(401).json({
-    status: 'fail',
-    message: 'Undefind Endpoint',
+    status: "fail",
+    message: "Undefind Endpoint",
   });
 };
 
