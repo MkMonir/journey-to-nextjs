@@ -175,7 +175,12 @@ const Navbar = ({
 
                               <ul className="space-y-1">
                                 <li className="truncate font-medium">
-                                  <Link href="">{booking.restaurant.name}</Link>
+                                  <Link
+                                    href={`/restaurant/${booking.restaurant.slug}`}
+                                    onClick={() => setReserveOpen(false)}
+                                  >
+                                    {booking.restaurant.name}
+                                  </Link>
                                 </li>
                                 <li className="flex gap-1">
                                   <Image
