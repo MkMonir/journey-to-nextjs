@@ -14,6 +14,7 @@ const PaymentModal = () => {
     postalCode: "",
   };
   const [paymentData, setPaymentData] = useState(initalPaymentData);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     const handler = (e: any) => {
@@ -36,6 +37,20 @@ const PaymentModal = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentData({ ...paymentData, [e.target.id]: e.target.value });
   };
+
+  useEffect(() => {
+    if (
+      paymentData.name &&
+      paymentData.cardNo &&
+      paymentData.cvcNo &&
+      paymentData.postalCode &&
+      paymentData.date
+    ) {
+      return setIsDisabled(false);
+    }
+
+    return setIsDisabled(true);
+  }, [paymentData]);
 
   return (
     <div>
@@ -113,7 +128,10 @@ const PaymentModal = () => {
               >
                 Cancel
               </button>
-              <button className="px-5 py-3 bg-teal-500 rounded-md font-medium text-lg text-teal-50 active:scale-95 transition-all duration-300 ease-in-out">
+              <button
+                className="px-5 py-3 bg-teal-500 rounded-md font-medium text-lg text-teal-50 active:scale-95 transition-all duration-300 ease-in-out disabled:bg-gray-300 disabled:active:scale-100"
+                disabled={isDisabled}
+              >
                 Add payment method
               </button>
             </div>
