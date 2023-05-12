@@ -6,6 +6,14 @@ import { useEffect, useRef, useState } from "react";
 const PaymentModal = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const initalPaymentData = {
+    name: "",
+    cardNo: "",
+    date: "",
+    cvcNo: "",
+    postalCode: "",
+  };
+  const [paymentData, setPaymentData] = useState(initalPaymentData);
 
   useEffect(() => {
     const handler = (e: any) => {
@@ -15,6 +23,7 @@ const PaymentModal = () => {
 
       if (!modalRef.current.contains(e.target)) {
         setModalOpen(false);
+        setPaymentData(initalPaymentData);
       }
     };
     document.addEventListener("click", handler, true);
@@ -23,6 +32,10 @@ const PaymentModal = () => {
       document.removeEventListener("click", handler);
     };
   }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPaymentData({ ...paymentData, [e.target.id]: e.target.value });
+  };
 
   return (
     <div>
@@ -52,33 +65,51 @@ const PaymentModal = () => {
               type="text"
               className="w-[48%] p-3 rounded-md border-primary focus:ring-black focus:ring-1"
               placeholder="Name on card"
+              id="name"
+              onChange={handleChange}
+              value={paymentData.name}
             />
             <input
               type="text"
               className="w-[48%] p-3 rounded-md border-primary focus:ring-black focus:ring-1"
               placeholder="1234 1234 1234 1234"
+              id="cardNo"
+              onChange={handleChange}
+              value={paymentData.cardNo}
             />
             <div className="flex gap-5 w-full flex-wrap">
               <input
-                type="text"
+                type="month"
                 className="w-[31.3%] p-3 rounded-md border-primary focus:ring-black focus:ring-1"
                 placeholder="MM / YY"
+                id="date"
+                onChange={handleChange}
+                value={paymentData.date}
               />
               <input
                 type="text"
                 className="w-[31.3%] p-3 rounded-md border-primary focus:ring-black focus:ring-1"
                 placeholder="CVC"
+                id="cvcNo"
+                onChange={handleChange}
+                value={paymentData.cvcNo}
               />
               <input
                 type="text"
                 className="w-[31.3%] p-3 rounded-md border-primary focus:ring-black focus:ring-1"
                 placeholder="Postal code"
+                id="postalCode"
+                onChange={handleChange}
+                value={paymentData.postalCode}
               />
             </div>
             <div className="w-full flex justify-end gap-8 mt-8">
               <button
                 className="text-lg text-red-500"
-                onClick={() => setModalOpen(false)}
+                onClick={() => {
+                  setModalOpen(false);
+                  setPaymentData(initalPaymentData);
+                }}
               >
                 Cancel
               </button>
@@ -89,7 +120,10 @@ const PaymentModal = () => {
           </form>
           <button
             className="w-8 h-8 bg-gray-800 grid place-items-center rounded-lg absolute top-2 right-5"
-            onClick={() => setModalOpen(false)}
+            onClick={() => {
+              setModalOpen(false);
+              setPaymentData(initalPaymentData);
+            }}
           >
             <Image src="/icons/close.png" alt="" width={16} height={16} />
           </button>
