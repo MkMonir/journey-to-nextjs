@@ -283,7 +283,19 @@ const Navbar = ({
               searchOpen ? "grid" : "hidden"
             } place-items-center`}
           >
-            <div className="w-3/5" ref={searchRef}>
+            <div className="w-3/5 relative" ref={searchRef}>
+              <button
+                className="absolute right-3 top-3"
+                onClick={() => setSearchOpen(false)}
+              >
+                <Image
+                  src="/icons/close.png"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="w-7 h-7"
+                />
+              </button>
               <Header />
             </div>
           </div>
