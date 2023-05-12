@@ -7,6 +7,8 @@ import { AuthContext } from "../context/AuthContext";
 import useAuth from "@/hooks/useAuth";
 import Image from "next/image";
 import { Restaurant } from "@prisma/client";
+import { useRouter } from "next/navigation";
+import Header from "./Header";
 
 const Navbar = ({
   bookings,
@@ -19,16 +21,20 @@ const Navbar = ({
     booker_email: string;
   }[];
 }) => {
+  const [searchItem, setSearchItem] = useState("");
+  const router = useRouter();
   const { data } = useContext(AuthContext);
   const { signOut } = useAuth();
   const [profileOpen, setProfileOpen] = useState(false);
   const [reserveOpen, setReserveOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
   const reserveRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handler = (e: any) => {
-      if (!profileRef.current || !reserveRef.current) {
+      if (!profileRef.current || !reserveRef.current || !searchRef.current) {
         return;
       }
       if (!profileRef.current.contains(e.target)) {
@@ -37,6 +43,10 @@ const Navbar = ({
 
       if (!reserveRef.current.contains(e.target)) {
         setReserveOpen(false);
+      }
+
+      if (!searchRef.current.contains(e.target)) {
+        setSearchOpen(false);
       }
     };
     document.addEventListener("click", handler, true);
@@ -61,6 +71,19 @@ const Navbar = ({
     },
   ];
 
+  useEffect(() => {
+    const current = searchRef.current;
+
+    const child = current?.getElementsByTagName("form")[0];
+    const input = current?.getElementsByTagName("input")[0];
+
+    child?.addEventListener("submit", () => {
+      if (input?.value !== "") {
+        setSearchOpen(false);
+      }
+    });
+  }, []);
+
   return (
     <nav className="bg-white py-3 px-5 flex justify-between items-center container mx-auto">
       <Link
@@ -70,7 +93,7 @@ const Navbar = ({
         AddaKhana
       </Link>
 
-      <>
+      <div className="flex items-center gap-4">
         {data ? (
           <div className="flex items-center gap-4">
             {/* Profile */}
@@ -236,7 +259,36 @@ const Navbar = ({
             <Modal isSignin={true} />
           </div>
         )}
-      </>
+        {/* Search Bar */}
+        <div>
+          <button
+            className="pl-3 border-l border-0 border-gray-300 border-solid"
+            onClick={() => {
+              setSearchOpen(true);
+              setReserveOpen(false);
+              setProfileOpen(false);
+            }}
+          >
+            <Image
+              src="/icons/search.png"
+              alt=""
+              width={20}
+              height={20}
+              className="w-7 h-7"
+            />
+          </button>
+
+          <div
+            className={`fixed inset-0 w-full h-full bg-gray-600 bg-opacity-60 z-50 ${
+              searchOpen ? "grid" : "hidden"
+            } place-items-center`}
+          >
+            <div className="w-3/5" ref={searchRef}>
+              <Header />
+            </div>
+          </div>
+        </div>
+      </div>
     </nav>
   );
 };

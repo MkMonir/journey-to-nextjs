@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const SearchBar = () => {
-  const [searchItem, setSearchItem] = useState('');
+  const [searchItem, setSearchItem] = useState("");
   const router = useRouter();
 
   return (
@@ -12,11 +12,11 @@ const SearchBar = () => {
       onSubmit={(e) => {
         e.preventDefault();
 
-        if (searchItem === '') return;
+        if (searchItem === "") return;
         router.push(`/search?city=${searchItem}`);
-        setSearchItem('');
+        setSearchItem("");
       }}
-      className="text-left py-3 flex gap-2 flex-col sm:flex-row"
+      className="text-left py-3 flex gap-2 flex-col sm:flex-row form"
     >
       {/* SEARCH Bar */}
       <input
