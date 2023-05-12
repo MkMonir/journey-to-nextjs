@@ -24,8 +24,8 @@ model Restaurant{
   location_id Int
   location Location @relation(fields: [location_id],references: [id])
   cuisine_id Int
-  cuisine Cuisine @relation(fields: [cuisine_id],references: [id])
-  reviews Review[]
+  cuisine   Cuisine @relation(fields: [cuisine_id],references: [id])
+  reviews   Review[]
   bookings  Booking[]
   tables    Table[]
   favorites Favourite[]
@@ -129,6 +129,8 @@ model User{
   password    String
   phone       String
   reviews Review[]
+    cards     Card[]
+
 
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
@@ -138,6 +140,20 @@ model Favourite{
   id          Int    @id   @default(autoincrement())
   restaurant_id    Int
   restaurant  Restaurant @relation(fields: [restaurant_id],references: [id])
+
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Card{
+  id          Int    @id   @default(autoincrement())
+
+  card_name   String
+  card_number String
+  card_cvc    String
+  card_expiry String
+  user_id Int
+  user    User @relation(fields: [user_id],references: [id])
 
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
