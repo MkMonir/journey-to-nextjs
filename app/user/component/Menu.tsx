@@ -14,6 +14,10 @@ const Menu = () => {
       text: "Account Details",
       link: "/user/profile",
     },
+    {
+      text: "Payment Methods",
+      link: "/user/payment-methods",
+    },
   ];
 
   return (
