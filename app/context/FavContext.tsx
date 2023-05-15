@@ -25,11 +25,11 @@ export const FavContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [favData, setFavData] = useState<Fav[]>(
-    JSON.parse(localStorage.getItem("favData") || "[]")
+    JSON.parse(window.localStorage.getItem("favData") || "[]")
   );
 
   useEffect(() => {
-    setFavData(JSON.parse(localStorage.getItem("favData") || "[]"));
+    setFavData(JSON.parse(window.localStorage.getItem("favData") || "[]"));
   }, []);
 
   const addToFavData = (favItem: Fav) => {
@@ -39,7 +39,7 @@ export const FavContextProvider = ({
       setFavData((prev) => {
         let filteredData = prev.filter((prev) => prev.id !== favItem.id);
 
-        localStorage.setItem("favData", JSON.stringify(filteredData));
+        window.localStorage.setItem("favData", JSON.stringify(filteredData));
 
         return filteredData;
       });
@@ -47,7 +47,7 @@ export const FavContextProvider = ({
       setFavData((prev) => {
         let updatedData = [...prev, favItem];
 
-        localStorage.setItem("favData", JSON.stringify(updatedData));
+        window.localStorage.setItem("favData", JSON.stringify(updatedData));
         return updatedData;
       });
     }
