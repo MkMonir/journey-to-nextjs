@@ -48,14 +48,11 @@ export const AuthContextProvider = ({
         return setAuthState({ loading: false, error: null, data: null });
       }
 
-      const res = await axios.get(
-        "https://adda-khana.vercel.app//api/auth/me",
-        {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          },
-        }
-      );
+      const res = await axios.get("https://adda-khana.vercel.app/api/auth/me", {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       setAuthState({ loading: false, error: null, data: res.data.data });
     } catch (err: any) {

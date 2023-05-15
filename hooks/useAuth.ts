@@ -89,7 +89,7 @@ const useAuth = () => {
       setAuthState({ loading: true, error: null, data: null });
 
       const res = await axios.patch(
-        "https://adda-khana.vercel.app//api/users/update_user",
+        "https://adda-khana.vercel.app/api/users/update_user",
         {
           email,
           first_name,
