@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { createContext, useEffect, useState } from 'react';
-import { getCookie } from 'cookies-next';
-import axios from 'axios';
+import { createContext, useEffect, useState } from "react";
+import { getCookie } from "cookies-next";
+import axios from "axios";
 
 interface User {
   id: number;
@@ -32,27 +32,38 @@ const intialState = {
 
 export const AuthContext = createContext<AuthState>(intialState);
 
-export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
+export const AuthContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [authState, setAuthState] = useState<State>(intialState);
 
   const fetchUser = async () => {
     try {
       setAuthState({ loading: true, error: null, data: null });
-      const jwt = getCookie('jwt');
+      const jwt = getCookie("jwt");
 
       if (!jwt) {
         return setAuthState({ loading: false, error: null, data: null });
       }
 
-      const res = await axios.get('http://localhost:3000/api/auth/me', {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      });
-      axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+      const res = await axios.get(
+        "https://adda-khana.vercel.app//api/auth/me",
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      );
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       setAuthState({ loading: false, error: null, data: res.data.data });
     } catch (err: any) {
-      setAuthState({ loading: false, error: err.response.data.message, data: null });
+      setAuthState({
+        loading: false,
+        error: err.response.data.message,
+        data: null,
+      });
     }
   };
 

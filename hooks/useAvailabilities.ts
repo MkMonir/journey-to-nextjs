@@ -1,10 +1,12 @@
-import axios from 'axios';
-import { useState } from 'react';
+import axios from "axios";
+import { useState } from "react";
 
 const useAvailabilities = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [data, setData] = useState<{ time: string; available: boolean }[] | null>(null);
+  const [data, setData] = useState<
+    { time: string; available: boolean }[] | null
+  >(null);
 
   const fetchAvailabilities = async ({
     slug,
@@ -20,7 +22,7 @@ const useAvailabilities = () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/restaurant/${slug}/availability?day=${day}&time=${time}&partySize=${partySize}`
+        `https://adda-khana.vercel.app//api/restaurant/${slug}/availability?day=${day}&time=${time}&partySize=${partySize}`
       );
       setLoading(false);
       setData(res.data.data.availabilities);
