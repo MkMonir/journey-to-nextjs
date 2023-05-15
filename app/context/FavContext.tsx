@@ -25,11 +25,18 @@ export const FavContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [favData, setFavData] = useState<Fav[]>(
-    JSON.parse(window.localStorage.getItem("favData") || "[]")
+    JSON.parse(
+      (typeof window !== "undefined" && localStorage.getItem("favData")) || "[]"
+    )
   );
 
   useEffect(() => {
-    setFavData(JSON.parse(window.localStorage.getItem("favData") || "[]"));
+    setFavData(
+      JSON.parse(
+        (typeof window !== "undefined" && localStorage.getItem("favData")) ||
+          "[]"
+      )
+    );
   }, []);
 
   const addToFavData = (favItem: Fav) => {
@@ -39,7 +46,8 @@ export const FavContextProvider = ({
       setFavData((prev) => {
         let filteredData = prev.filter((prev) => prev.id !== favItem.id);
 
-        window.localStorage.setItem("favData", JSON.stringify(filteredData));
+        typeof window !== "undefined" &&
+          localStorage.setItem("favData", JSON.stringify(filteredData));
 
         return filteredData;
       });
@@ -47,7 +55,8 @@ export const FavContextProvider = ({
       setFavData((prev) => {
         let updatedData = [...prev, favItem];
 
-        window.localStorage.setItem("favData", JSON.stringify(updatedData));
+        typeof window !== "undefined" &&
+          localStorage.setItem("favData", JSON.stringify(updatedData));
         return updatedData;
       });
     }
