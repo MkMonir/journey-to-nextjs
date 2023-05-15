@@ -17,8 +17,6 @@ const Header = ({ restaurant }: { restaurant: Restaurant }) => {
     });
   };
 
-  console.log(favData);
-
   useEffect(() => {
     if (favData) {
       const existed_item = favData.findIndex(

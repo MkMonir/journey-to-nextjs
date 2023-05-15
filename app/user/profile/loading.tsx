@@ -17,7 +17,7 @@ const loading = () => {
             </div>
             <div className="bg-white rounded p-6 w-[70%] flex flex-col gap-8">
               <>
-                <div className="w-32 bg-slate-200 animate-pulse h-6 mb-6"></div>
+                <div className="w-full bg-slate-200 animate-pulse h-6 mb-6"></div>
                 {[1, 2, 3, 4, 5].map((item, i) => (
                   <div
                     key={i}
