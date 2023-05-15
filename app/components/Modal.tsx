@@ -71,7 +71,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
   useEffect(() => {
     if (open) document.body.style.overflowY = "hidden";
     else document.body.style.overflowY = "scroll";
-  }, []);
+  }, [open]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
