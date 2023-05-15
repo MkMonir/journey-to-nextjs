@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import { useContext, useEffect, useRef, useState } from 'react';
-import Input from './Input';
-import useAuth from '@/hooks/useAuth';
-import { AuthContext } from '../context/AuthContext';
-import Loading from './Loading';
-import Alert from './Alert';
+import { useContext, useEffect, useRef, useState } from "react";
+import Input from "./Input";
+import useAuth from "@/hooks/useAuth";
+import { AuthContext } from "../context/AuthContext";
+import Loading from "./Loading";
+import Alert from "./Alert";
 
 const Modal = ({ isSignin }: { isSignin: boolean }) => {
   const { signIn, signUp } = useAuth();
   const modalRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
-    city: '',
-    phone: '',
-    email: '',
-    password: '',
+    first_name: "",
+    last_name: "",
+    city: "",
+    phone: "",
+    email: "",
+    password: "",
   });
   const [disabled, setDisabled] = useState(true);
   const { error, loading, setAuthState } = useContext(AuthContext);
@@ -52,7 +52,14 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
 
     if (!modalRef.current.contains(e.target)) {
       setOpen(false);
-      setFormData({ first_name: '', last_name: '', city: '', phone: '', email: '', password: '' });
+      setFormData({
+        first_name: "",
+        last_name: "",
+        city: "",
+        phone: "",
+        email: "",
+        password: "",
+      });
       setAuthState({ loading: false, error: null, data: null });
     }
   };
@@ -61,8 +68,10 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  if (open) document.body.style.overflowY = 'hidden';
-  else document.body.style.overflowY = 'scroll';
+  useEffect(() => {
+    if (open) document.body.style.overflowY = "hidden";
+    else document.body.style.overflowY = "scroll";
+  }, []);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -79,18 +88,18 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
       {/* <!-- Modal toggle --> */}
       <button
         className={`active:scale-95 transition-all duration-200 px-4 py-1.5 rounded ${
-          isSignin ? 'border-primary' : 'bg-teal-400 text-teal-50'
+          isSignin ? "border-primary" : "bg-teal-400 text-teal-50"
         } `}
         type="button"
         onClick={handleOpen}
       >
-        {isSignin ? 'Signin' : 'Signup'}
+        {isSignin ? "Signin" : "Signup"}
       </button>
 
       {/* <!-- Main modal --> */}
       <div
         className={`fixed inset-0 z-50 w-full p-4 overflow-hidden h-full transition-all duration-200 ease-in-out  ${
-          open ? 'opacity-100 visible' : 'opacity-0 invisible'
+          open ? "opacity-100 visible" : "opacity-0 invisible"
         } grid place-items-center bg-gray-800 bg-opacity-40`}
         onClick={handleClose}
       >
@@ -98,7 +107,9 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
           {/* <!-- Modal content --> */}
           <div
             className={`relative bg-white rounded-lg shadow transition-all duration-200 ease-in-out ${
-              open ? 'scale-100 opacity-100 visible' : 'scale-0 opacity-0 invisible'
+              open
+                ? "scale-100 opacity-100 visible"
+                : "scale-0 opacity-0 invisible"
             }`}
             ref={modalRef}
           >
@@ -108,12 +119,12 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
               onClick={() => {
                 setOpen(false);
                 setFormData({
-                  first_name: '',
-                  last_name: '',
-                  city: '',
-                  phone: '',
-                  email: '',
-                  password: '',
+                  first_name: "",
+                  last_name: "",
+                  city: "",
+                  phone: "",
+                  email: "",
+                  password: "",
                 });
                 setAuthState({ loading: false, error: null, data: null });
               }}
@@ -136,7 +147,9 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
 
             <div className="px-6 py-6 lg:px-8">
               <h3 className="my-4 text-2xl font-medium text-gray-900 text-center">
-                {isSignin ? 'Sign in to our platform' : 'Create your AddaKhana account'}
+                {isSignin
+                  ? "Sign in to our platform"
+                  : "Create your AddaKhana account"}
               </h3>
               {error && <Alert text={error} />}
               <form className="space-y-6 mt-5" onSubmit={handleSubmit}>
@@ -206,7 +219,9 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
                     className="w-full text-white bg-teal-700 hover:bg-teal-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:bg-gray-400"
                     disabled={disabled}
                   >
-                    {isSignin ? 'Login to your account' : 'Create a new account'}
+                    {isSignin
+                      ? "Login to your account"
+                      : "Create a new account"}
                   </button>
                 )}
               </form>
