@@ -8,6 +8,7 @@ import Menu from "./components/Menu";
 import { Item, PrismaClient, Review } from "@prisma/client";
 import Header from "./components/Header";
 import { notFound } from "next/navigation";
+import RatingModal from "./components/RatingModal";
 
 const prisma = new PrismaClient();
 
@@ -40,6 +41,7 @@ const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
       reviews: true,
       open_time: true,
       close_time: true,
+      bookings: true,
     },
   });
 
@@ -78,11 +80,21 @@ const page = async ({ params }: { params: { slug: string } }) => {
           <Menu items={restaurant.items} />
 
           {/* REVIEWS */}
-          <section id="review">
-            <h3 className="font-bold text-3xl mt-10 mb-7 border-b border-solid border-0 border-gray-300 pb-5">
+          <section
+            id="review"
+            className="flex items-center justify-between border-bottom mb-7 pb-5 mt-10"
+          >
+            <h3 className="font-bold text-3xl">
               What {restaurant.reviews.length}{" "}
               {restaurant.reviews.length === 1 ? "Person" : "people"} are saying
             </h3>
+
+            <div>
+              <RatingModal
+                restaurantId={restaurant.id}
+                bookings={restaurant.bookings}
+              />
+            </div>
           </section>
 
           {restaurant.reviews.map((review: any) => (
