@@ -43,6 +43,10 @@ export default async function RootLayout({
     <html lang="en" className={inter.className}>
       <head>
         <link rel="shortcut icon" href="/favicon.png" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        />
       </head>
       <body>
         <main className="bg-gray-200 min-h-screen w-screen">
