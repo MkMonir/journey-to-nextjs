@@ -5,14 +5,14 @@ import Gallary from "./components/Gallary";
 import ReviewCard from "./components/ReviewCard";
 import ReserveCard from "./components/ReserveCard";
 import Menu from "./components/Menu";
-import { Item, PrismaClient, Review } from "@prisma/client";
+import { Booking, Item, PrismaClient, Review } from "@prisma/client";
 import Header from "./components/Header";
 import { notFound } from "next/navigation";
 import RatingModal from "./components/RatingModal";
 
 const prisma = new PrismaClient();
 
-interface Restaurant {
+export interface Restaurant {
   id: number;
   name: string;
   description: string;
@@ -23,6 +23,7 @@ interface Restaurant {
   reviews: Review[];
   open_time: string;
   close_time: string;
+  bookings: Booking[];
 }
 
 const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
@@ -51,10 +52,7 @@ const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
 };
 
 const page = async ({ params }: { params: { slug: string } }) => {
-  let restaurant: any;
-  if (params.slug) {
-    restaurant = await fetchRestaurant(params.slug);
-  }
+  const restaurant = await fetchRestaurant(params.slug);
 
   return (
     <>
@@ -63,7 +61,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
         {/* DESCRIPTION */}
         <section
           id="overview"
-          className="bg-white rounded rounded-b-none w-full lg:w-[70%] p-3 pt-0"
+          className="bg-white rounded rounded-b-none w-full lg:w-[70%] p-3 pt-0 mb-10"
         >
           <RestaurantNavbar />
           <Title name={restaurant.name} />
@@ -84,26 +82,46 @@ const page = async ({ params }: { params: { slug: string } }) => {
             id="review"
             className="flex items-center justify-between border-bottom mb-7 pb-5 mt-10"
           >
-            <h3 className="font-bold text-3xl">
-              What {restaurant.reviews.length}{" "}
-              {restaurant.reviews.length === 1 ? "Person" : "people"} are saying
-            </h3>
+            {restaurant.reviews.length ? (
+              <h3 className="font-bold text-3xl">
+                What {restaurant.reviews.length}{" "}
+                {restaurant.reviews.length === 1 ? "Person" : "people"} are
+                saying
+              </h3>
+            ) : (
+              <h3 className="font-bold text-3xl">
+                Be the first to review this restaurant
+              </h3>
+            )}
 
             <div>
               <RatingModal
                 restaurantId={restaurant.id}
+                restaurantSlug={restaurant.slug}
                 bookings={restaurant.bookings}
+                reviews={restaurant.reviews}
               />
             </div>
           </section>
 
-          {restaurant.reviews.map((review: any) => (
-            <ReviewCard
-              review={review}
-              key={review.id}
-              reviews={restaurant.reviews}
-            />
-          ))}
+          {restaurant.reviews.length ? (
+            <>
+              {restaurant.reviews.map((review: any) => (
+                <ReviewCard
+                  review={review}
+                  key={review.id}
+                  reviews={restaurant.reviews}
+                />
+              ))}
+            </>
+          ) : (
+            <p>
+              At present, {restaurant.name} has no reviews. Please add a review
+              after your dining experience to help others make a decision about
+              where to eat.
+            </p>
+          )}
+
           {/* REVIEWS */}
         </section>
         {/* DESCRIPTION */}
