@@ -7,22 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FavContextProvider } from "./context/FavContext";
 import { ReviewContextProvider } from "./context/ReviewContext";
 import Footer from "./components/Footer";
-
-const prisma = new PrismaClient();
-
-const fetchBookings = async () => {
-  const bookings = await prisma.booking.findMany({
-    select: {
-      id: true,
-      restaurant: true,
-      booking_time: true,
-      number_of_people: true,
-      booker_email: true,
-    },
-  });
-
-  return bookings;
-};
+import { BookingContextProvider } from "./context/BookingContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,8 +24,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const bookings = await fetchBookings();
-
   return (
     <html lang="en" className={inter.className}>
       <head>
@@ -55,10 +38,12 @@ export default async function RootLayout({
           <AuthContextProvider>
             <FavContextProvider>
               <ReviewContextProvider>
-                <div className="bg-white">
-                  <Navbar bookings={bookings} />
-                  {children}
-                </div>
+                <BookingContextProvider>
+                  <div className="bg-white">
+                    <Navbar />
+                    {children}
+                  </div>
+                </BookingContextProvider>
                 <Footer />
               </ReviewContextProvider>
             </FavContextProvider>

@@ -11,6 +11,7 @@ import { AuthContext } from "@/app/context/AuthContext";
 import { Time, convertToDisplayTime } from "@/utils/convertToDisplayTime";
 import { format } from "date-fns";
 import axios from "axios";
+import { BookingContext } from "@/app/context/BookingContext";
 
 const ReservedCard = ({
   booking,
@@ -24,29 +25,13 @@ const ReservedCard = ({
   };
 }) => {
   const { data } = useContext(AuthContext);
-  const [deletedId, setDeletedId] = useState(0);
+  const { cancelBooking } = useContext(BookingContext);
 
   const [day, time] = new Date(booking.booking_time).toISOString().split("T");
 
-  const handleDelete = async (bookingId: number) => {
-    try {
-      if (window.confirm("Are you sure you want to cancel this booking")) {
-        const deleteReservation = await axios.delete(
-          `http://localhost:3000/api/reserve/delete?bookingId=${bookingId}`
-        );
-
-        if (deleteReservation.data.status === "success") {
-          setDeletedId(deleteReservation.data.data);
-        }
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <>
-      {booking.booker_email === data?.email && booking.id !== deletedId ? (
+      {booking.booker_email === data?.email ? (
         <div className="block p-4 border-primary rounded-md hover:shadow-md translate-all duration-300 ease-in-out ">
           <div className="flex gap-4">
             <img
@@ -85,7 +70,7 @@ const ReservedCard = ({
 
               <button
                 className="text-lg text-red-500 cursor-pointer"
-                onClick={() => handleDelete(booking.id)}
+                onClick={() => cancelBooking(booking.id)}
               >
                 Cancel
               </button>
