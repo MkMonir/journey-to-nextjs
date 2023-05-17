@@ -3,6 +3,7 @@
 import Alert from "@/app/components/Alert";
 import { Spinner } from "@/app/components/Loading";
 import { AuthContext } from "@/app/context/AuthContext";
+import { ReviewContext } from "@/app/context/ReviewContext";
 import { Booking, Review } from "@prisma/client";
 import axios from "axios";
 import Image from "next/image";
@@ -12,12 +13,10 @@ const RatingModal = ({
   restaurantId,
   restaurantSlug,
   bookings,
-  reviews,
 }: {
   restaurantId: number;
   restaurantSlug: string;
   bookings: Booking[];
-  reviews: Review[];
 }) => {
   const { data } = useContext(AuthContext);
   const [rating, setRating] = useState(0);
@@ -25,9 +24,9 @@ const RatingModal = ({
   const [reviewtext, setReviewText] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [disabled, setDisabled] = useState(true);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const modalRef = useRef<HTMLDivElement>(null);
+  const { createReview, reviews, isLoading } = useContext(ReviewContext);
 
   const handleClose = () => {
     setModalOpen(false);
@@ -65,30 +64,16 @@ const RatingModal = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
-    try {
-      const review = await axios.post(
-        `http://localhost:3000/api/restaurant/${restaurantSlug}/review`,
-        {
-          rating,
-          text: reviewtext,
-          first_name: data?.first_name,
-          last_name: data?.last_name,
-          restaurant_id: restaurantId,
-          user_id: data?.id,
-        }
-      );
 
-      if (review.data.status === "success") {
-        setModalOpen(false);
-        setLoading(false);
-      }
-
-      return review.data;
-    } catch (err: any) {
-      setError(err.response.data.message);
-      setLoading(false);
-    }
+    createReview({
+      rating,
+      reviewtext,
+      first_name: data?.first_name || "",
+      last_name: data?.last_name || "",
+      restaurant_id: restaurantId,
+      user_id: data?.id || 0,
+      restaurantSlug,
+    });
   };
 
   return (
@@ -161,7 +146,7 @@ const RatingModal = ({
                     className="w-full px-5 py-3 bg-teal-500 rounded-md text-teal-50 text-lg active:scale-95 transition-all duration-200 ease-in-out disabled:bg-gray-300 disabled:active:scale-100"
                     disabled={disabled}
                   >
-                    {loading ? <Spinner /> : "Submit a Review"}
+                    {isLoading ? <Spinner /> : "Submit a Review"}
                   </button>
                 </form>
               </div>

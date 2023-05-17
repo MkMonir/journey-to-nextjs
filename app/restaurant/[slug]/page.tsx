@@ -99,28 +99,14 @@ const page = async ({ params }: { params: { slug: string } }) => {
                 restaurantId={restaurant.id}
                 restaurantSlug={restaurant.slug}
                 bookings={restaurant.bookings}
-                reviews={restaurant.reviews}
               />
             </div>
           </section>
 
-          {restaurant.reviews.length ? (
-            <>
-              {restaurant.reviews.map((review: any) => (
-                <ReviewCard
-                  review={review}
-                  key={review.id}
-                  reviews={restaurant.reviews}
-                />
-              ))}
-            </>
-          ) : (
-            <p>
-              At present, {restaurant.name} has no reviews. Please add a review
-              after your dining experience to help others make a decision about
-              where to eat.
-            </p>
-          )}
+          <ReviewCard
+            restaurant_id={restaurant.id}
+            restaurantName={restaurant.name}
+          />
 
           {/* REVIEWS */}
         </section>

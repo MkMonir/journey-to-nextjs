@@ -5,6 +5,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import "react-datepicker/dist/react-datepicker.css";
 import { FavContextProvider } from "./context/FavContext";
+import { ReviewContextProvider } from "./context/ReviewContext";
 
 const prisma = new PrismaClient();
 
@@ -52,10 +53,12 @@ export default async function RootLayout({
         <main className="bg-gray-200 min-h-screen w-screen">
           <AuthContextProvider>
             <FavContextProvider>
-              <div className="bg-white">
-                <Navbar bookings={bookings} />
-                {children}
-              </div>
+              <ReviewContextProvider>
+                <div className="bg-white">
+                  <Navbar bookings={bookings} />
+                  {children}
+                </div>
+              </ReviewContextProvider>
             </FavContextProvider>
           </AuthContextProvider>
         </main>
