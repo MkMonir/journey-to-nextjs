@@ -24,10 +24,6 @@ const RestaurantCard = ({ restaurant }: Props) => {
 
         <div className="flex items-center">
           <Ratting reviews={restaurant.reviews} />
-          {/* <p className="ml-2">
-            {restaurant.reviews.length} review
-            {restaurant.reviews.length === 1 ? "" : "s"}
-          </p> */}
         </div>
 
         <div className="flex capitalize space-x-3">
@@ -35,12 +31,6 @@ const RestaurantCard = ({ restaurant }: Props) => {
           <Price price={restaurant.price} />
           <p>{restaurant.location.name}</p>
         </div>
-
-        <p className="mt-1 text-base font-medium">
-          {restaurant.bookings.length
-            ? `Books ${restaurant.bookings.length} times today`
-            : ""}
-        </p>
       </div>
     </Link>
   );
