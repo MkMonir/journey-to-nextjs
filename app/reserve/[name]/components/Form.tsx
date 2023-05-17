@@ -1,8 +1,9 @@
 "use client";
 
 import { Spinner } from "@/app/components/Loading";
+import { AuthContext } from "@/app/context/AuthContext";
 import useReservation from "@/hooks/useReservation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const Form = ({
   partySize,
@@ -13,11 +14,12 @@ const Form = ({
   date: string;
   slug: string;
 }) => {
+  const { data } = useContext(AuthContext);
   const [bookerdata, setBookerdata] = useState({
-    booker_first_name: "",
-    booker_last_name: "",
-    booker_phone: "",
-    booker_email: "",
+    booker_first_name: data?.first_name,
+    booker_last_name: data?.last_name,
+    booker_phone: data?.phone,
+    booker_email: data?.email,
     booker_occasion: "",
     booker_request: "",
   });
@@ -50,10 +52,10 @@ const Form = ({
       day,
       time,
       partySize,
-      booker_first_name: bookerdata.booker_first_name,
-      booker_last_name: bookerdata.booker_last_name,
-      booker_email: bookerdata.booker_email,
-      booker_phone: bookerdata.booker_phone,
+      booker_first_name: bookerdata.booker_first_name || "",
+      booker_last_name: bookerdata.booker_last_name || "",
+      booker_email: bookerdata.booker_email || "",
+      booker_phone: bookerdata.booker_phone || "",
       booker_occasion: bookerdata.booker_occasion,
       booker_request: bookerdata.booker_request,
     });
@@ -73,6 +75,7 @@ const Form = ({
         className="border-primary w-80 p-3 rounded-sm"
         onChange={handleChange}
         value={bookerdata.booker_first_name}
+        disabled
       />
       <input
         type="text"
@@ -81,6 +84,7 @@ const Form = ({
         className="border-primary w-80 p-3 rounded-sm"
         onChange={handleChange}
         value={bookerdata.booker_last_name}
+        disabled
       />
       <input
         type="text"
@@ -89,6 +93,7 @@ const Form = ({
         className="border-primary w-80 p-3 rounded-sm"
         onChange={handleChange}
         value={bookerdata.booker_phone}
+        disabled
       />
       <input
         type="text"
@@ -97,6 +102,7 @@ const Form = ({
         className="border-primary w-80 p-3 rounded-sm"
         onChange={handleChange}
         value={bookerdata.booker_email}
+        disabled
       />
       <input
         type="text"
