@@ -26,7 +26,7 @@ const page = async () => {
         <h4 className="text-2xl font-medium">Upcoming reservations</h4>
       </div>
 
-      {bookings ? (
+      {bookings.length ? (
         <>
           {bookings.map((booking, i) => (
             <>
