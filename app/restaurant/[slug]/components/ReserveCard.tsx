@@ -115,7 +115,12 @@ const ReserveCard = ({
 
         {data && data.length ? (
           <div className="mt-4">
-            <p className="text-reg">Select a Time</p>
+            {data?.find((time) => time.available === true) ? (
+              <p className="text-reg">Select a Time</p>
+            ) : (
+              <p className="text-reg">No availablity at this time</p>
+            )}
+
             <div className="flex flex-wrap mt-2">
               {data.map((time, i) => {
                 return time.available ? (
