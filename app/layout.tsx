@@ -51,15 +51,15 @@ export default async function RootLayout({
         />
       </head>
       <body>
-        <main className="bg-gray-200 min-h-screen w-screen">
+        <main className="bg-gray-200 min-h-screen w-screen flex flex-col justify-between">
           <AuthContextProvider>
             <FavContextProvider>
               <ReviewContextProvider>
                 <div className="bg-white">
                   <Navbar bookings={bookings} />
                   {children}
-                  <Footer />
                 </div>
+                <Footer />
               </ReviewContextProvider>
             </FavContextProvider>
           </AuthContextProvider>
