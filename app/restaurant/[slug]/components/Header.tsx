@@ -1,8 +1,9 @@
 "use client";
 
 import { FavContext } from "@/app/context/FavContext";
-import { Restaurant } from "@prisma/client";
 import { useContext, useEffect, useState } from "react";
+import { Restaurant } from "../page";
+import Image from "next/image";
 
 const Header = ({ restaurant }: { restaurant: Restaurant }) => {
   const { addToFavData, favData } = useContext(FavContext);
@@ -47,9 +48,21 @@ const Header = ({ restaurant }: { restaurant: Restaurant }) => {
       >
         {/*  eslint-disable-next-line @next/next/no-img-element */}
         {isFav ? (
-          <img src="/icons/bookmark-red.png" alt="" className="w-7 h-7" />
+          <Image
+            src="/icons/bookmark-red.png"
+            alt=""
+            width={20}
+            height={20}
+            className="w-7 h-7"
+          />
         ) : (
-          <img src="/icons/bookmark-white.png" alt="" className="w-6 h-6" />
+          <Image
+            src="/icons/bookmark-white.png"
+            alt=""
+            width={20}
+            height={20}
+            className="w-6 h-6"
+          />
         )}
         {isFav ? "Restaurant saved" : "Save the restaurant"}
       </button>
