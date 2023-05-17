@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 import "react-datepicker/dist/react-datepicker.css";
 import { FavContextProvider } from "./context/FavContext";
 import { ReviewContextProvider } from "./context/ReviewContext";
+import Footer from "./components/Footer";
 
 const prisma = new PrismaClient();
 
@@ -57,6 +58,7 @@ export default async function RootLayout({
                 <div className="bg-white">
                   <Navbar bookings={bookings} />
                   {children}
+                  <Footer />
                 </div>
               </ReviewContextProvider>
             </FavContextProvider>
