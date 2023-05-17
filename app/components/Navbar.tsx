@@ -7,8 +7,8 @@ import { AuthContext } from "../context/AuthContext";
 import useAuth from "@/hooks/useAuth";
 import Image from "next/image";
 import { Restaurant } from "@prisma/client";
-import { useRouter } from "next/navigation";
 import Header from "./Header";
+import axios from "axios";
 
 const Navbar = ({
   bookings,
@@ -21,8 +21,6 @@ const Navbar = ({
     booker_email: string;
   }[];
 }) => {
-  const [searchItem, setSearchItem] = useState("");
-  const router = useRouter();
   const { data } = useContext(AuthContext);
   const { signOut } = useAuth();
   const [profileOpen, setProfileOpen] = useState(false);
@@ -31,6 +29,7 @@ const Navbar = ({
   const profileRef = useRef<HTMLDivElement>(null);
   const reserveRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+  const [deletedId, setDeletedId] = useState(0);
 
   useEffect(() => {
     const handler = (e: any) => {
@@ -83,6 +82,22 @@ const Navbar = ({
       }
     });
   }, []);
+
+  const handleDelete = async (bookingId: number) => {
+    try {
+      if (window.confirm("Are you sure you want to cancel this booking")) {
+        const deleteReservation = await axios.delete(
+          `http://localhost:3000/api/reserve/delete?bookingId=${bookingId}`
+        );
+
+        if (deleteReservation.data.status === "success") {
+          setDeletedId(deleteReservation.data.data);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <nav className="bg-white py-3 px-5 flex justify-between items-center container mx-auto">
@@ -177,78 +192,89 @@ const Navbar = ({
                 </h4>
                 {/* Reservations */}
                 <div className="flex flex-col gap-5 divide-y divide-solid divide-x-0 divide-gray-100 py-3 max-h-[60vh] overflow-y-scroll">
-                  {bookings.length &&
-                    bookings.map((booking) => (
-                      <React.Fragment key={booking.id}>
-                        {booking.booker_email === data.email &&
-                        new Date().getDate() -
-                          new Date(booking.booking_time).getDate() <
-                          0 ? (
-                          <ul className="space-y-1 pt-3">
-                            <li className="flex gap-3">
-                              <div className="bg-gray-800 w-10 h-10 rounded-full grid place-items-center">
-                                <Image
-                                  src="/icons/exterior.png"
-                                  alt=""
-                                  width={20}
-                                  height={20}
-                                  className="w-6 h-6"
-                                />
-                              </div>
-
-                              <ul className="space-y-1">
-                                <li className="truncate font-medium">
-                                  <Link
-                                    href={`/restaurant/${booking.restaurant.slug}`}
-                                    onClick={() => setReserveOpen(false)}
-                                  >
-                                    {booking.restaurant.name}
-                                  </Link>
-                                </li>
-                                <li className="flex gap-1">
+                  {bookings.length ? (
+                    <>
+                      {bookings.map((booking) => (
+                        <React.Fragment key={booking.id}>
+                          {booking.booker_email === data.email &&
+                          new Date().getDate() -
+                            new Date(booking.booking_time).getDate() <
+                            0 &&
+                          booking.id !== deletedId ? (
+                            <ul className="space-y-1 pt-3">
+                              <li className="flex gap-3">
+                                <div className="bg-gray-800 w-10 h-10 rounded-full grid place-items-center">
                                   <Image
-                                    src="/icons/avatar.png"
+                                    src="/icons/exterior.png"
                                     alt=""
                                     width={20}
                                     height={20}
                                     className="w-6 h-6"
                                   />
-                                  <p>
-                                    Table for {booking.number_of_people}{" "}
-                                    {booking.number_of_people === 1
-                                      ? "person"
-                                      : "people"}
-                                  </p>
-                                </li>
-                                <li className="flex gap-1">
-                                  <Image
-                                    src="/icons/calender.png"
-                                    width={20}
-                                    height={20}
-                                    alt=""
-                                  />
+                                </div>
 
-                                  <p>
-                                    {new Date(booking.booking_time)
-                                      .toUTCString()
-                                      .split(" ")
-                                      .slice(0, -1)
-                                      .join(" ")}{" "}
-                                    at
-                                  </p>
-                                </li>
+                                <ul className="space-y-1">
+                                  <li className="truncate font-medium">
+                                    <Link
+                                      href={`/restaurant/${booking.restaurant.slug}`}
+                                      onClick={() => setReserveOpen(false)}
+                                    >
+                                      {booking.restaurant.name}
+                                    </Link>
+                                  </li>
+                                  <li className="flex gap-1">
+                                    <Image
+                                      src="/icons/avatar.png"
+                                      alt=""
+                                      width={20}
+                                      height={20}
+                                      className="w-6 h-6"
+                                    />
+                                    <p>
+                                      Table for {booking.number_of_people}{" "}
+                                      {booking.number_of_people === 1
+                                        ? "person"
+                                        : "people"}
+                                    </p>
+                                  </li>
+                                  <li className="flex gap-1">
+                                    <Image
+                                      src="/icons/calender.png"
+                                      width={20}
+                                      height={20}
+                                      alt=""
+                                    />
 
-                                <button className="text-red-600 pt-2">
-                                  Cancel
-                                </button>
-                              </ul>
-                            </li>
-                          </ul>
-                        ) : (
-                          ""
-                        )}
-                      </React.Fragment>
-                    ))}
+                                    <p>
+                                      {new Date(booking.booking_time)
+                                        .toUTCString()
+                                        .split(" ")
+                                        .slice(0, -1)
+                                        .join(" ")}{" "}
+                                      at
+                                    </p>
+                                  </li>
+
+                                  <button
+                                    className="text-red-600 pt-2"
+                                    onClick={() => handleDelete(booking.id)}
+                                  >
+                                    Cancel
+                                  </button>
+                                </ul>
+                              </li>
+                            </ul>
+                          ) : (
+                            ""
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </>
+                  ) : (
+                    <h2 className="text-xl font-medium">
+                      You have no upcoming reservations
+                    </h2>
+                  )}
                 </div>
               </div>
             </div>
