@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import Navbar from "./components/Navbar";
 import { AuthContextProvider } from "./context/AuthContext";
 import "./globals.css";

@@ -1,5 +1,6 @@
 "use client";
 
+import Alert from "@/app/components/Alert";
 import Input from "@/app/components/Input";
 import { Spinner } from "@/app/components/Loading";
 import { AuthContext } from "@/app/context/AuthContext";
@@ -24,7 +25,7 @@ const Form = () => {
     if (!loading) {
       setUpdateUserData({ ...updateUserData, ...data });
     }
-  }, [data, loading, updateUserData]);
+  }, [data, loading]);
 
   useEffect(() => {
     function compareObjects(obj1: any, obj2: any) {
@@ -41,7 +42,7 @@ const Form = () => {
     }
 
     return setDisabled(false);
-  }, [data, updateUserData]);
+  }, [data]);
 
   const handleChange = (e: any) => {
     setUpdateUserData({ ...updateUserData, [e.target.id]: e.target.value });
@@ -57,56 +58,66 @@ const Form = () => {
     <div>
       <h4 className="text-3xl font-medium mb-6">About Me</h4>
 
-      <form className="space-y-8" onSubmit={handleSubmit}>
-        <Input
-          type="text"
-          placeholder="first name"
-          id="first_name"
-          label="First name"
-          handleChange={handleChange}
-          value={updateUserData?.first_name}
-        />
-        <Input
-          type="text"
-          placeholder="last name"
-          id="last_name"
-          label="Last name"
-          handleChange={handleChange}
-          value={updateUserData?.last_name}
-        />
-        <Input
-          type="text"
-          placeholder="email"
-          id="email"
-          label="Email"
-          handleChange={handleChange}
-          value={updateUserData?.email}
-        />
-        <Input
-          type="text"
-          placeholder="Phone Number"
-          id="phone"
-          label="Phone Number"
-          handleChange={handleChange}
-          value={updateUserData?.phone}
-        />
-        <Input
-          type="text"
-          placeholder="City"
-          id="city"
-          label="City"
-          handleChange={handleChange}
-          value={updateUserData?.city}
-        />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          {data ? (
+            <form className="space-y-8" onSubmit={handleSubmit}>
+              <Input
+                type="text"
+                placeholder="first name"
+                id="first_name"
+                label="First name"
+                handleChange={handleChange}
+                value={updateUserData?.first_name}
+              />
+              <Input
+                type="text"
+                placeholder="last name"
+                id="last_name"
+                label="Last name"
+                handleChange={handleChange}
+                value={updateUserData?.last_name}
+              />
+              <Input
+                type="text"
+                placeholder="email"
+                id="email"
+                label="Email"
+                handleChange={handleChange}
+                value={updateUserData?.email}
+              />
+              <Input
+                type="text"
+                placeholder="Phone Number"
+                id="phone"
+                label="Phone Number"
+                handleChange={handleChange}
+                value={updateUserData?.phone}
+              />
+              <Input
+                type="text"
+                placeholder="City"
+                id="city"
+                label="City"
+                handleChange={handleChange}
+                value={updateUserData?.city}
+              />
 
-        <button
-          type="submit"
-          className="w-full text-center block bg-teal-500 py-3.5 text-teal-50 rounded-md text-lg active:scale-95 transition-all duration-200 disabled:bg-gray-300"
-          disabled={disabled}
-        >
-          {loading ? <Spinner /> : "Save Changes"}
-        </button>
-      </form>
+              <button
+                type="submit"
+                className="w-full text-center block bg-teal-500 py-3.5 text-teal-50 rounded-md text-lg active:scale-95 transition-all duration-200 disabled:bg-gray-300"
+                disabled={disabled}
+              >
+                {loading ? <Spinner /> : "Save Changes"}
+              </button>
+            </form>
+          ) : (
+            <Alert text={"Unauthorized request"} />
+          )}
+        </>
+      )}
     </div>
   );
 };

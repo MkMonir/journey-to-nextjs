@@ -188,7 +188,7 @@ const Navbar = () => {
                           <React.Fragment key={i}>
                             {booking.booker_email === data.email &&
                             new Date().getDate() -
-                              new Date(booking.booking_time).getDate() <=
+                              new Date(booking.booking_time).getDate() <
                               0 ? (
                               <ul className="space-y-1 pt-3">
                                 <li className="flex gap-3">
@@ -269,6 +269,13 @@ const Navbar = () => {
                   </div>
                 )}
                 {/* Reservations END */}
+                <Link
+                  href="/user/dining-dashboard"
+                  className="block text-center mt-2 py-2 w-full  text-lg font-medium"
+                  onClick={() => setReserveOpen(false)}
+                >
+                  See All Bookings
+                </Link>
               </div>
             </div>
             {/*================================================= Reservations END ===================================================*/}

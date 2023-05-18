@@ -9,6 +9,7 @@ import {
 } from "react";
 import axios from "axios";
 import { Restaurant } from "@prisma/client";
+import { getCookie } from "cookies-next";
 
 interface Booking {
   id: number;
@@ -21,12 +22,14 @@ interface Booking {
 interface BookingContext {
   bookings: Booking[];
   isLoading: boolean;
+  error: string;
   cancelBooking: (bookingId: number) => void;
 }
 
 export const BookingContext = createContext<BookingContext>({
   bookings: [],
   isLoading: false,
+  error: "",
   cancelBooking: () => {},
 });
 
@@ -37,18 +40,28 @@ export const BookingContextProvider = ({
 }) => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const fetchBookings = async () => {
     setIsLoading(true);
     try {
+      const jwt = getCookie("jwt");
+
       const res = await axios.get(
-        `http://localhost:3000/api/bookings/getBookings`
+        `http://localhost:3000/api/bookings/getBookings`,
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
       );
+      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
       setIsLoading(false);
       return setBookings(res.data.data);
     } catch (err: any) {
       setIsLoading(false);
-      return console.log(err);
+      setError(err.response.data.message);
     }
   };
 
@@ -65,9 +78,9 @@ export const BookingContextProvider = ({
         );
         setIsLoading(false);
       }
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
       setIsLoading(false);
+      setError(err.response.data.message);
     }
   };
 
@@ -78,6 +91,7 @@ export const BookingContextProvider = ({
   const valuItems = {
     bookings,
     isLoading,
+    error,
     cancelBooking,
     setBookings,
   };

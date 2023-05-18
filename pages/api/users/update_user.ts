@@ -19,34 +19,34 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           min: 1,
           max: 20,
         }),
-        errorMessage: "First name is invalid",
+        message: "First name is invalid",
       },
       {
         valid: validator.isLength(last_name, {
           min: 1,
           max: 20,
         }),
-        errorMessage: "Last name is invalid",
+        message: "Last name is invalid",
       },
       {
         valid: validator.isEmail(email),
-        errorMessage: "Email address is invalid",
+        message: "Email address is invalid",
       },
       {
         valid: validator.isMobilePhone(phone),
-        errorMessage: "Phone number is invalid",
+        message: "Phone number is invalid",
       },
       {
         valid: validator.isLength(city, {
           min: 1,
         }),
-        errorMessage: "City name is Invalid",
+        message: "City name is Invalid",
       },
     ];
 
     validationSchema.forEach((check) => {
       if (!check.valid) {
-        errors.push(check.errorMessage);
+        errors.push(check.message);
       }
     });
 

@@ -78,7 +78,8 @@ const RatingModal = ({
 
   return (
     <>
-      {bookings.length &&
+      {data &&
+      bookings.length &&
       bookings.map((booking) => booking.id === restaurantId).length &&
       !reviews.find((review) => review.user_id === data?.id) ? (
         <div>

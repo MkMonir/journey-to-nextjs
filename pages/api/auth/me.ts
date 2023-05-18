@@ -12,6 +12,12 @@ export default async function handler(
   const bearerToken = req.headers["authorization"] as string;
   const token = bearerToken.split(" ")[1];
 
+  if (!token) {
+    return res.status(401).json({
+      message: "Unauthorized request",
+    });
+  }
+
   const payload = jwt.decode(token) as { email: string };
 
   if (!payload.email) {
@@ -36,7 +42,7 @@ export default async function handler(
 
   if (!user) {
     return res.status(401).json({
-      message: "User not found",
+      message: "Unauthorized request",
     });
   }
 

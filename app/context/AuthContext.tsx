@@ -24,7 +24,7 @@ interface AuthState extends State {
 }
 
 const intialState = {
-  loading: false,
+  loading: true,
   error: null,
   data: null,
   setAuthState: () => {},
@@ -45,7 +45,11 @@ export const AuthContextProvider = ({
       const jwt = getCookie("jwt");
 
       if (!jwt) {
-        return setAuthState({ loading: false, error: null, data: null });
+        return setAuthState({
+          loading: false,
+          error: null,
+          data: null,
+        });
       }
 
       const res = await axios.get("http://localhost:3000/api/auth/me", {
@@ -54,10 +58,9 @@ export const AuthContextProvider = ({
         },
       });
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
-      setAuthState({ loading: false, error: null, data: res.data.data });
+      return setAuthState({ loading: false, error: null, data: res.data.data });
     } catch (err: any) {
-      console.log(err);
-      setAuthState({
+      return setAuthState({
         loading: false,
         error: err.response.data.message,
         data: null,

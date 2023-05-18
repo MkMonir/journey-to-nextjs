@@ -1,6 +1,6 @@
-import findAvailableTables from '@/services/restaurant/findAvailableTables';
-import { PrismaClient } from '@prisma/client';
-import { NextApiRequest, NextApiResponse } from 'next';
+import findAvailableTables from "@/services/restaurant/findAvailableTables";
+import { PrismaClient } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from "next";
 
 const prisma = new PrismaClient();
 
@@ -13,7 +13,9 @@ const availability = async (req: NextApiRequest, res: NextApiResponse) => {
   };
 
   if (!day || !time || !partySize) {
-    return res.status(400).json({ status: 'fail', message: 'Invalid data provided' });
+    return res
+      .status(400)
+      .json({ status: "fail", message: "Invalid data provided" });
   }
 
   const restaurant = await prisma.restaurant.findUnique({
@@ -28,7 +30,9 @@ const availability = async (req: NextApiRequest, res: NextApiResponse) => {
   });
 
   if (!restaurant) {
-    return res.status(400).json({ status: 'fail', message: 'Invalid data provided' });
+    return res
+      .status(400)
+      .json({ status: "fail", message: "Invalid data provided" });
   }
 
   const searchTimesWithTables = await findAvailableTables({
@@ -40,7 +44,7 @@ const availability = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!searchTimesWithTables) {
     return res.status(400).json({
-      errorMessage: 'Invalid data provided',
+      message: "Invalid data provided",
     });
   }
 
@@ -57,15 +61,17 @@ const availability = async (req: NextApiRequest, res: NextApiResponse) => {
     })
     .filter((availability) => {
       const timeIsAfterOpenHour =
-        new Date(`${day}T${availability.time}`) >= new Date(`${day}T${restaurant.open_time}`);
+        new Date(`${day}T${availability.time}`) >=
+        new Date(`${day}T${restaurant.open_time}`);
       const timeIsBeforeCloseHour =
-        new Date(`${day}T${availability.time}`) <= new Date(`${day}T${restaurant.close_time}`);
+        new Date(`${day}T${availability.time}`) <=
+        new Date(`${day}T${restaurant.close_time}`);
 
       return timeIsAfterOpenHour && timeIsBeforeCloseHour;
     });
 
   return res.status(201).json({
-    status: 'success',
+    status: "success",
     data: { availabilities },
   });
 };

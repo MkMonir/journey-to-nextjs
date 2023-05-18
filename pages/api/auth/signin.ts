@@ -14,17 +14,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const validationSchema = [
     {
       valid: validator.isEmail(email),
-      errorMessage: "Email address is invalid",
+      message: "Email address is invalid",
     },
     {
       valid: validator.isLength(password, { min: 1 }),
-      errorMessage: "Password invalid",
+      message: "Password invalid",
     },
   ];
 
   validationSchema.forEach((check) => {
     if (!check.valid) {
-      errors.push(check.errorMessage);
+      errors.push(check.message);
     }
   });
 
