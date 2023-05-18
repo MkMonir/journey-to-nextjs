@@ -39,7 +39,7 @@ export const BookingContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [bookings, setBookings] = useState<Booking[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
   const fetchBookings = async () => {

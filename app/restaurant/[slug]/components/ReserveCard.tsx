@@ -1,10 +1,11 @@
 "use client";
 import { Spinner } from "@/app/components/Loading";
+import { AuthContext } from "@/app/context/AuthContext";
 import { partySize as partySizes, times } from "@/data";
 import useAvailabilities from "@/hooks/useAvailabilities";
 import { Time, convertToDisplayTime } from "@/utils/convertToDisplayTime";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 
 const ReserveCard = ({
@@ -17,6 +18,7 @@ const ReserveCard = ({
   slug: string;
 }) => {
   const { data, loading, fetchAvailabilities } = useAvailabilities();
+  const auth = useContext(AuthContext);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [day, setDay] = useState(new Date().toISOString().split("T")[0]);
   const [time, setTime] = useState(openTime);
@@ -113,12 +115,18 @@ const ReserveCard = ({
         </div>
 
         {/* Find A time BTN START */}
-        <button
-          className="p-3 w-full bg-teal-400 rounded-sm md:text-xl text-red-50 active:scale-95 transition-all duration-200 mt-5"
-          onClick={handleClick}
-        >
-          {loading ? <Spinner /> : "Find a time"}
-        </button>
+        {auth.data ? (
+          <button
+            className="p-3 w-full bg-teal-400 rounded-sm md:text-xl text-red-50 active:scale-95 transition-all duration-200 mt-5"
+            onClick={handleClick}
+          >
+            {loading ? <Spinner /> : "Find a time"}
+          </button>
+        ) : (
+          <h2 className="text-center text-xl text-red-500 font-medium">
+            Login First to find times
+          </h2>
+        )}
         {/* Find A time BTN End */}
 
         {/* Availabilities Start */}
