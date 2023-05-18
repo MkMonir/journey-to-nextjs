@@ -18,9 +18,11 @@ const FavCard = () => {
         {favData.length &&
           favData.map((data) => (
             <div className="flex gap-4 items-center" key={data.id}>
-              <img
+              <Image
                 src={data.main_image}
                 alt=""
+                width={200}
+                height={200}
                 className="w-20 h-20 rounded-md object-cover"
               />
 

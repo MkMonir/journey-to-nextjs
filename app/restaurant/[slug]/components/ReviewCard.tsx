@@ -1,7 +1,6 @@
 "use client";
 
 import Stars from "@/app/components/Stars";
-import { Review } from "@prisma/client";
 import { useContext, useEffect } from "react";
 import { ReviewContext } from "@/app/context/ReviewContext";
 import { Spinner } from "@/app/components/Loading";

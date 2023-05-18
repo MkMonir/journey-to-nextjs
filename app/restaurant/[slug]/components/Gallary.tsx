@@ -10,7 +10,14 @@ const Gallary = ({ images }: { images: string[] }) => {
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {images?.map((image, i) => (
           <div key={i}>
-            <img className="h-auto max-w-full rounded-lg" src={image} alt="" />
+            <Image
+              className="h-auto max-w-full rounded-lg"
+              src={image}
+              width={500}
+              height={500}
+              alt=""
+              priority
+            />
           </div>
         ))}
       </div>

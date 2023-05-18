@@ -14,6 +14,7 @@ const Footer = () => {
           . All Rights Reserved.
         </span>
         <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
+          {/* ===================================== Social Links Start ========================================== */}
           <a
             href="https://www.facebook.com/mkm0n1r/"
             target="_blank"
@@ -38,6 +39,7 @@ const Footer = () => {
             <i className="fa-brands fa-twitter"></i>
             <span className="sr-only">Twitter page</span>
           </a>
+          {/* ===================================== Social Links End ========================================== */}
         </div>
       </div>
     </div>

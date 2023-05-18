@@ -21,6 +21,7 @@ const Navbar = () => {
   const searchRef = useRef<HTMLDivElement>(null);
   const { bookings, cancelBooking, isLoading } = useContext(BookingContext);
 
+  // Body CLick
   useEffect(() => {
     const handler = (e: any) => {
       if (!profileRef.current || !reserveRef.current || !searchRef.current) {
@@ -45,6 +46,7 @@ const Navbar = () => {
     };
   }, []);
 
+  // Profile Items Array
   const profileItems = [
     {
       text: "My Profile",
@@ -60,6 +62,7 @@ const Navbar = () => {
     },
   ];
 
+  // Search Bar Modal CLose
   useEffect(() => {
     const current = searchRef.current;
 
@@ -75,18 +78,21 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white py-3 px-5 flex justify-between items-center container mx-auto">
+      {/*================================================= LOGO ===================================================*/}
       <Link
         href="/"
         className="font-bold text-gray-700 text-2xl md:text-3xl select-none"
       >
         AddaKhana
       </Link>
+      {/*================================================= LOGO END ===================================================*/}
 
       <div className="flex items-center gap-4">
         {data ? (
           <div className="flex items-center gap-4">
-            {/* Profile */}
+            {/*================================================= Profile START ===================================================*/}
             <div className="relative" ref={profileRef}>
+              {/* Profile Button Start */}
               <button
                 className="w-10 h-10 bg-gray-100 rounded-full grid place-items-center border-primary"
                 onClick={() => {
@@ -102,8 +108,9 @@ const Navbar = () => {
                   className="w-8 h-8"
                 />
               </button>
+              {/* Profile Button ENd */}
 
-              {/* <!-- Dropdown menu --> */}
+              {/* <!-- Dropdown menu start--> */}
               <div
                 className={`z-10 absolute top-12 right-0 bg-white divide-y divide-solid divide-x-0 divide-gray-100 rounded-lg shadow w-56 border-primary ${
                   profileOpen ? "block" : "hidden"
@@ -137,8 +144,11 @@ const Navbar = () => {
                   </li>
                 </div>
               </div>
+              {/* <!-- Dropdown menu  End--> */}
             </div>
-            {/* Reservations */}
+            {/*================================================= Profile END ===================================================*/}
+
+            {/*=============================================== Reservations Start ==================================================*/}
             <div className="relative" ref={reserveRef}>
               <button
                 className="block"
@@ -164,7 +174,8 @@ const Navbar = () => {
                 <h4 className="font-medium pb-2 text-xl">
                   Upcoming reservations
                 </h4>
-                {/* Reservations */}
+
+                {/* Reservations Start */}
                 {isLoading ? (
                   <div className="grid w-full place-items-center">
                     <Spinner />
@@ -233,12 +244,14 @@ const Navbar = () => {
                                       </p>
                                     </li>
 
+                                    {/* <!-- Cancel Reserve BTN Start --> */}
                                     <button
                                       className="text-red-600 pt-2"
                                       onClick={() => cancelBooking(booking.id)}
                                     >
                                       Cancel
                                     </button>
+                                    {/* <!-- Cancel Reserve BTN End --> */}
                                   </ul>
                                 </li>
                               </ul>
@@ -255,8 +268,10 @@ const Navbar = () => {
                     )}
                   </div>
                 )}
+                {/* Reservations END */}
               </div>
             </div>
+            {/*================================================= Reservations END ===================================================*/}
           </div>
         ) : (
           <div className="flex gap-2">
@@ -264,7 +279,8 @@ const Navbar = () => {
             <Modal isSignin={true} />
           </div>
         )}
-        {/* Search Bar */}
+
+        {/*========================================================= Search Bar Start ====================================================*/}
         <div>
           <button
             className="pl-3 border-l border-0 border-gray-300 border-solid"
@@ -305,6 +321,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
+        {/*========================================================= Search Bar End ====================================================*/}
       </div>
     </nav>
   );

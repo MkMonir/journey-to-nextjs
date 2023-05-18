@@ -10,7 +10,6 @@ import { useContext, useState } from "react";
 import { AuthContext } from "@/app/context/AuthContext";
 import { Time, convertToDisplayTime } from "@/utils/convertToDisplayTime";
 import { format } from "date-fns";
-import axios from "axios";
 import { BookingContext } from "@/app/context/BookingContext";
 
 const ReservedCard = ({
@@ -34,9 +33,11 @@ const ReservedCard = ({
       {booking.booker_email === data?.email ? (
         <div className="block p-4 border-primary rounded-md hover:shadow-md translate-all duration-300 ease-in-out ">
           <div className="flex gap-4">
-            <img
+            <Image
               src={booking.restaurant.mainImage}
               alt=""
+              width={400}
+              height={400}
               className="w-[20%] h-32 rounded-md object-cover"
             />
 

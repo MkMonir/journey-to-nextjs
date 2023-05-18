@@ -82,12 +82,14 @@ const RatingModal = ({
       bookings.map((booking) => booking.id === restaurantId).length &&
       !reviews.find((review) => review.user_id === data?.id) ? (
         <div>
+          {/* Create Review Button Start*/}
           <button
             className="bg-teal-500 px-5 py-3 rounded-md text-lg text-teal-50"
             onClick={() => setModalOpen(true)}
           >
             Create a review
           </button>
+          {/* Create Review Button End*/}
 
           <div>
             <div
@@ -99,18 +101,22 @@ const RatingModal = ({
                 className="bg-gray-50 rounded-sm w-1/3 px-5 py-10 relative"
                 ref={modalRef}
               >
+                {/* Close Button Start */}
                 <button
                   className="bg-teal-400 w-10 h-10 rounded-md grid place-items-center absolute top-2 right-2 active:scale-95 transition-all duration-200 ease-in-out"
                   onClick={handleClose}
                 >
                   <Image src="/icons/close.png" alt="" width={20} height={20} />
                 </button>
+                {/* Close Button End */}
+
                 <h2 className="text-4xl mb-6 text-center font-medium">
                   How did we do?
                 </h2>
 
                 <>{error && <Alert text={error} />}</>
 
+                {/* Review Modal Form Start */}
                 <form className="space-y-5" onSubmit={handleSubmit}>
                   <div className="flex justify-center">
                     {[...Array(5)].map((star, i) => (
@@ -149,6 +155,7 @@ const RatingModal = ({
                     {isLoading ? <Spinner /> : "Submit a Review"}
                   </button>
                 </form>
+                {/* Review Modal Form End */}
               </div>
             </div>
           </div>

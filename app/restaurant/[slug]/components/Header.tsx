@@ -35,18 +35,19 @@ const Header = ({ restaurant }: { restaurant: Restaurant }) => {
   return (
     <div className="h-[50vh] aspect-w-1 aspect-h-1 relative">
       {/* HEADER */}
-      {/*  eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={restaurant.mainImage}
         alt=""
+        width={2000}
+        height={800}
         className="w-full h-full object-cover object-center"
+        priority
       />
 
       <button
         className="absolute top-8 right-12 py-3 px-5 bg-white rounded-md flex gap-2 items-center hover:bg-gray-100 active:scale-95 transition-all duration-300 ease-in-out font-medium"
         onClick={handleAddFav}
       >
-        {/*  eslint-disable-next-line @next/next/no-img-element */}
         {isFav ? (
           <Image
             src="/icons/bookmark-red.png"

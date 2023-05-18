@@ -2,6 +2,7 @@ import Link from "next/link";
 import { RestaurantCardType } from "../page";
 import Price from "./Price";
 import Ratting from "./Ratting";
+import Image from "next/image";
 
 interface Props {
   restaurant: RestaurantCardType;
@@ -13,10 +14,13 @@ const RestaurantCard = ({ restaurant }: Props) => {
       href={`/restaurant/${restaurant.slug}`}
       className="w-64 h-82 m-3 rounded-sm overflow-hidden border border-solid border-gray-400 cursor-pointer shadow-md"
     >
-      <img
+      <Image
         src={restaurant.mainImage}
         alt=""
+        width={300}
+        height={300}
         className="w-full h-44 object-cover object-center"
+        priority
       />
 
       <div className="p-2">

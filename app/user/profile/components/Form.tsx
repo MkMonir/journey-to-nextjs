@@ -24,7 +24,7 @@ const Form = () => {
     if (!loading) {
       setUpdateUserData({ ...updateUserData, ...data });
     }
-  }, [loading]);
+  }, [data, loading, updateUserData]);
 
   useEffect(() => {
     function compareObjects(obj1: any, obj2: any) {
@@ -41,7 +41,7 @@ const Form = () => {
     }
 
     return setDisabled(false);
-  }, [updateUserData]);
+  }, [data, updateUserData]);
 
   const handleChange = (e: any) => {
     setUpdateUserData({ ...updateUserData, [e.target.id]: e.target.value });

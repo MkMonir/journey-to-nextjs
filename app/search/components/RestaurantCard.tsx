@@ -2,6 +2,7 @@ import Price from "@/app/components/Price";
 import Ratting from "@/app/components/Ratting";
 import calculateReviewRatingAvg from "@/utils/calculateReviewRatingAvg";
 import { Cuisine, Location, PRICE, Review } from "@prisma/client";
+import Image from "next/image";
 import Link from "next/link";
 
 interface Restaurant {
@@ -28,9 +29,11 @@ const RestaurantCard = ({ restaurant }: { restaurant: Restaurant }) => {
   return (
     <div className="border-bottom py-5 flex">
       {/* RESTAURANT CARD */}
-      <img
+      <Image
         src={restaurant.mainImage}
         alt=""
+        width={300}
+        height={300}
         className="w-48 h-44 rounded-md object-cover"
       />
 

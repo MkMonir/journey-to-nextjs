@@ -85,7 +85,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
 
   return (
     <div>
-      {/* <!-- Modal toggle --> */}
+      {/* <!--=============================================== Modal toggle ================================================--> */}
       <button
         className={`active:scale-95 transition-all duration-200 px-4 py-1.5 rounded ${
           isSignin ? "border-primary" : "bg-teal-400 text-teal-50"
@@ -95,8 +95,9 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
       >
         {isSignin ? "Signin" : "Signup"}
       </button>
+      {/* <!--=============================================== Modal toggle END ================================================--> */}
 
-      {/* <!-- Main modal --> */}
+      {/* <!--=================================================== Main modal================================================= --> */}
       <div
         className={`fixed inset-0 z-50 w-full p-4 overflow-hidden h-full transition-all duration-200 ease-in-out  ${
           open ? "opacity-100 visible" : "opacity-0 invisible"
@@ -104,7 +105,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
         onClick={handleClose}
       >
         <div className="relative w-full max-w-lg max-h-full">
-          {/* <!-- Modal content --> */}
+          {/* <!--=========================================== Modal content =================================================== --> */}
           <div
             className={`relative bg-white rounded-lg shadow transition-all duration-200 ease-in-out ${
               open
@@ -113,6 +114,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
             }`}
             ref={modalRef}
           >
+            {/* =========================================== Modal Close BTN ===================================*/}
             <button
               type="button"
               className="absolute top-1.5 right-1.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
@@ -144,6 +146,7 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
               </svg>
               <span className="sr-only">Close modal</span>
             </button>
+            {/* =========================================== Modal Close BTN END ===================================*/}
 
             <div className="px-6 py-6 lg:px-8">
               <h3 className="my-4 text-2xl font-medium text-gray-900 text-center">
@@ -152,6 +155,8 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
                   : "Create your AddaKhana account"}
               </h3>
               {error && <Alert text={error} />}
+
+              {/* =========================================== Modal FORM START ===================================*/}
               <form className="space-y-6 mt-5" onSubmit={handleSubmit}>
                 {!isSignin && (
                   <>
@@ -225,8 +230,10 @@ const Modal = ({ isSignin }: { isSignin: boolean }) => {
                   </button>
                 )}
               </form>
+              {/* =========================================== Modal FORM END ===================================*/}
             </div>
           </div>
+          {/* <!--=========================================== Modal content END =================================================== --> */}
         </div>
       </div>
     </div>

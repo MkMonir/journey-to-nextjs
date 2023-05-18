@@ -61,6 +61,7 @@ const ReserveCard = ({
         <div className="text-center border-b border-0 border-solid border-gray-300 pb-2 font-bold">
           <h4 className="mr-7 text-lg">Make a Reservation</h4>
         </div>
+        {/* Party Size Select Start */}
         <div className="my-3 flex flex-col">
           <label htmlFor="party">Party Size</label>
           <select
@@ -76,8 +77,10 @@ const ReserveCard = ({
             ))}
           </select>
         </div>
+        {/* Party Size Select End */}
 
         <div className="flex flex-col sm:flex-row justify-between gap-1">
+          {/* Date Picker Start */}
           <div className="mb-3 flex flex-col w-full">
             <label htmlFor="">Date</label>
             <DatePicker
@@ -88,7 +91,9 @@ const ReserveCard = ({
               dateFormat="MMMM d"
             />
           </div>
+          {/* Date Picker End */}
 
+          {/* Time Picker Start */}
           <div className="flex flex-col w-full">
             <label htmlFor="time">Time</label>
             <select
@@ -104,15 +109,19 @@ const ReserveCard = ({
               ))}
             </select>
           </div>
+          {/* Time Picker End */}
         </div>
 
+        {/* Find A time BTN START */}
         <button
           className="p-3 w-full bg-teal-400 rounded-sm md:text-xl text-red-50 active:scale-95 transition-all duration-200 mt-5"
           onClick={handleClick}
         >
           {loading ? <Spinner /> : "Find a time"}
         </button>
+        {/* Find A time BTN End */}
 
+        {/* Availabilities Start */}
         {data && data.length ? (
           <div className="mt-4">
             {data?.find((time) => time.available === true) ? (
@@ -140,6 +149,7 @@ const ReserveCard = ({
             </div>
           </div>
         ) : null}
+        {/* Availabilities End */}
       </div>
 
       {/* RESERVATION CARD */}
