@@ -54,7 +54,7 @@ const FavCard = () => {
             ))}
         </div>
       ) : (
-        <Alert text={"Unauthorized request"} />
+        <Alert text={"Unauthorized request, Login Please!"} />
       )}
     </>
   );

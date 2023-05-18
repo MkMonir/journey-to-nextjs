@@ -5,7 +5,7 @@ export async function middleware(req: NextRequest, res: NextResponse) {
 
   if (!bearerToken) {
     return new NextResponse(
-      JSON.stringify({ message: "Unauthorized request" }),
+      JSON.stringify({ message: "Unauthorized request, Login Please!" }),
       {
         status: 401,
       }
@@ -16,7 +16,7 @@ export async function middleware(req: NextRequest, res: NextResponse) {
 
   if (!token) {
     return new NextResponse(
-      JSON.stringify({ message: "Unauthorized request" }),
+      JSON.stringify({ message: "Unauthorized request, Login Please!" }),
       {
         status: 401,
       }
@@ -29,7 +29,7 @@ export async function middleware(req: NextRequest, res: NextResponse) {
     await jose.jwtVerify(token, secret);
   } catch (error) {
     return new NextResponse(
-      JSON.stringify({ message: "Unauthorized request" }),
+      JSON.stringify({ message: "Unauthorized request, Login Please!" }),
       {
         status: 401,
       }
