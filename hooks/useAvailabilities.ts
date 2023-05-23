@@ -22,7 +22,7 @@ const useAvailabilities = () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/restaurant/${slug}/availability?day=${day}&time=${time}&partySize=${partySize}`
+        `https://addakhana-ctgity5xd-mkmonir.vercel.app/api/restaurant/${slug}/availability?day=${day}&time=${time}&partySize=${partySize}`
       );
       setLoading(false);
       setData(res.data.data.availabilities);
