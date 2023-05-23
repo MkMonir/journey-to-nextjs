@@ -57,7 +57,7 @@ export const ReviewContextProvider = ({
     try {
       setIsLoading(true);
       const res = await axios.get(
-        `https://addakhana-ctgity5xd-mkmonir.vercel.app/api/reviews/getReviews?restaurant_id=${restaurant_id}`
+        `https://addakhana.vercel.app//api/reviews/getReviews?restaurant_id=${restaurant_id}`
       );
       setIsLoading(false);
       return setReviews(res.data.data);
@@ -79,7 +79,7 @@ export const ReviewContextProvider = ({
     setIsLoading(true);
     try {
       const review = await axios.post(
-        `https://addakhana-ctgity5xd-mkmonir.vercel.app/api/restaurant/${restaurantSlug}/review`,
+        `https://addakhana.vercel.app//api/restaurant/${restaurantSlug}/review`,
         {
           rating,
           text: reviewtext,

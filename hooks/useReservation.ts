@@ -33,7 +33,7 @@ const useReservation = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        `https://addakhana-ctgity5xd-mkmonir.vercel.app/api/restaurant/${slug}/reserve?day=${day}&time=${time}&partySize=${partySize}`,
+        `https://addakhana.vercel.app//api/restaurant/${slug}/reserve?day=${day}&time=${time}&partySize=${partySize}`,
         {
           booker_first_name,
           booker_last_name,

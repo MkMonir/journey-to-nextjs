@@ -52,14 +52,11 @@ export const AuthContextProvider = ({
         });
       }
 
-      const res = await axios.get(
-        "https://addakhana-ctgity5xd-mkmonir.vercel.app/api/auth/me",
-        {
-          headers: {
-            Authorization: `Bearer ${jwt}`,
-          },
-        }
-      );
+      const res = await axios.get("https://addakhana.vercel.app//api/auth/me", {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
       axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
       return setAuthState({ loading: false, error: null, data: res.data.data });
     } catch (err: any) {

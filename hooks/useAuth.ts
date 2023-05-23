@@ -16,7 +16,7 @@ const useAuth = () => {
     setAuthState({ loading: true, error: null, data: null });
     try {
       const res = await axios.post(
-        "https://addakhana-ctgity5xd-mkmonir.vercel.app/api/auth/signin",
+        "https://addakhana.vercel.app//api/auth/signin",
         {
           email,
           password,
@@ -50,7 +50,7 @@ const useAuth = () => {
       setAuthState({ loading: true, error: null, data: null });
 
       const res = await axios.post(
-        "https://addakhana-ctgity5xd-mkmonir.vercel.app//api/auth/signup",
+        "https://addakhana.vercel.app///api/auth/signup",
         {
           email,
           password,
@@ -89,7 +89,7 @@ const useAuth = () => {
       setAuthState({ loading: true, error: null, data: null });
 
       const res = await axios.patch(
-        "https://addakhana-ctgity5xd-mkmonir.vercel.app/api/users/update_user",
+        "https://addakhana.vercel.app//api/users/update_user",
         {
           email,
           first_name,
