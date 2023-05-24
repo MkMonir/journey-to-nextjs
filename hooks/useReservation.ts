@@ -1,6 +1,6 @@
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const useReservation = () => {
   const [loading, setLoading] = useState(false);
@@ -33,7 +33,7 @@ const useReservation = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        `https://addakhana.vercel.app//api/restaurant/${slug}/reserve?day=${day}&time=${time}&partySize=${partySize}`,
+        `http://localhost:3000/api/restaurant/${slug}/reserve?day=${day}&time=${time}&partySize=${partySize}`,
         {
           booker_first_name,
           booker_last_name,
@@ -45,8 +45,8 @@ const useReservation = () => {
       );
       setLoading(false);
 
-      if (res.data.status === "success") {
-        router.push("/user/dining-dashboard");
+      if (res.data.status === 'success') {
+        router.push('/user/dining-dashboard');
       }
       return res.data;
     } catch (err: any) {

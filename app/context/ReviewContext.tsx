@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { createContext, useEffect, useState } from "react";
-import axios from "axios";
+import { createContext, useEffect, useState } from 'react';
+import axios from 'axios';
 
 interface Review {
   id: number;
@@ -57,7 +57,7 @@ export const ReviewContextProvider = ({
     try {
       setIsLoading(true);
       const res = await axios.get(
-        `https://addakhana.vercel.app//api/reviews/getReviews?restaurant_id=${restaurant_id}`
+        `http://localhost:3000/api/reviews/getReviews?restaurant_id=${restaurant_id}`
       );
       setIsLoading(false);
       return setReviews(res.data.data);
@@ -79,7 +79,7 @@ export const ReviewContextProvider = ({
     setIsLoading(true);
     try {
       const review = await axios.post(
-        `https://addakhana.vercel.app//api/restaurant/${restaurantSlug}/review`,
+        `http://localhost:3000/api/restaurant/${restaurantSlug}/review`,
         {
           rating,
           text: reviewtext,

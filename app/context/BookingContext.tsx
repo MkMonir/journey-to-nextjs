@@ -1,15 +1,9 @@
-"use client";
+'use client';
 
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useEffect,
-  useState,
-} from "react";
-import axios from "axios";
-import { Restaurant } from "@prisma/client";
-import { getCookie } from "cookies-next";
+import { createContext, useEffect, useState } from 'react';
+import axios from 'axios';
+import { Restaurant } from '@prisma/client';
+import { getCookie } from 'cookies-next';
 
 interface Booking {
   id: number;
@@ -24,13 +18,15 @@ interface BookingContext {
   isLoading: boolean;
   error: string;
   cancelBooking: (bookingId: number) => void;
+  fetchBookings: () => void;
 }
 
 export const BookingContext = createContext<BookingContext>({
   bookings: [],
   isLoading: false,
-  error: "",
+  error: '',
   cancelBooking: () => {},
+  fetchBookings: () => {},
 });
 
 export const BookingContextProvider = ({
@@ -40,28 +36,29 @@ export const BookingContextProvider = ({
 }) => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const fetchBookings = async () => {
     setIsLoading(true);
     try {
-      const jwt = getCookie("jwt");
+      const jwt = getCookie('jwt');
 
       const res = await axios.get(
-        `https://addakhana.vercel.app//api/bookings/getBookings`,
+        `http://localhost:3000/api/bookings/getBookings`,
         {
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
         }
       );
-      axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+      axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
 
       setIsLoading(false);
       return setBookings(res.data.data);
     } catch (err: any) {
+      console.log(err);
       setIsLoading(false);
-      setError(err.response.data.message);
+      return setError(err.response.data.message);
     }
   };
 
@@ -69,9 +66,9 @@ export const BookingContextProvider = ({
     setIsLoading(true);
 
     try {
-      if (window.confirm("Are you sure you want to cancel this booking")) {
+      if (window.confirm('Are you sure you want to cancel this booking')) {
         const deleteReservation = await axios.delete(
-          `https://addakhana.vercel.app//api/reserve/delete?bookingId=${bookingId}`
+          `http://localhost:3000/api/reserve/delete?bookingId=${bookingId}`
         );
         setBookings((prev) =>
           prev.filter((booking) => booking.id !== bookingId)
@@ -79,8 +76,9 @@ export const BookingContextProvider = ({
         setIsLoading(false);
       }
     } catch (err: any) {
+      console.log(error);
       setIsLoading(false);
-      setError(err.response.data.message);
+      return setError(err.response.data.message);
     }
   };
 
@@ -94,6 +92,7 @@ export const BookingContextProvider = ({
     error,
     cancelBooking,
     setBookings,
+    fetchBookings,
   };
 
   return (

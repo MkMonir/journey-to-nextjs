@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import { AuthContext } from "@/app/context/AuthContext";
-import axios from "axios";
-import { removeCookies } from "cookies-next";
+import { useContext } from 'react';
+import { AuthContext } from '@/app/context/AuthContext';
+import axios from 'axios';
+import { removeCookies } from 'cookies-next';
 
 const useAuth = () => {
   const { setAuthState } = useContext(AuthContext);
@@ -15,13 +15,10 @@ const useAuth = () => {
   }) => {
     setAuthState({ loading: true, error: null, data: null });
     try {
-      const res = await axios.post(
-        "https://addakhana.vercel.app//api/auth/signin",
-        {
-          email,
-          password,
-        }
-      );
+      const res = await axios.post('http://localhost:3000/api/auth/signin', {
+        email,
+        password,
+      });
       setAuthState({ loading: false, error: null, data: res.data.data });
     } catch (err: any) {
       setAuthState({
@@ -49,17 +46,14 @@ const useAuth = () => {
     try {
       setAuthState({ loading: true, error: null, data: null });
 
-      const res = await axios.post(
-        "https://addakhana.vercel.app///api/auth/signup",
-        {
-          email,
-          password,
-          first_name,
-          last_name,
-          city,
-          phone,
-        }
-      );
+      const res = await axios.post('http://localhost:3000//api/auth/signup', {
+        email,
+        password,
+        first_name,
+        last_name,
+        city,
+        phone,
+      });
       setAuthState({ loading: false, error: null, data: res.data.data });
     } catch (err: any) {
       setAuthState({
@@ -89,7 +83,7 @@ const useAuth = () => {
       setAuthState({ loading: true, error: null, data: null });
 
       const res = await axios.patch(
-        "https://addakhana.vercel.app//api/users/update_user",
+        'http://localhost:3000/api/users/update_user',
         {
           email,
           first_name,
@@ -114,7 +108,7 @@ const useAuth = () => {
   };
 
   const signOut = () => {
-    removeCookies("jwt");
+    removeCookies('jwt');
     setAuthState({ loading: false, error: null, data: null });
   };
 

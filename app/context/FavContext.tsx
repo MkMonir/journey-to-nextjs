@@ -1,12 +1,13 @@
-"use client";
+'use client';
 
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from 'react';
 
 interface Fav {
   id: number;
   slug: string;
   name: string;
   main_image: string;
+  email: string | undefined;
 }
 
 interface FavContextApp {
@@ -26,15 +27,15 @@ export const FavContextProvider = ({
 }) => {
   const [favData, setFavData] = useState<Fav[]>(
     JSON.parse(
-      (typeof window !== "undefined" && localStorage.getItem("favData")) || "[]"
+      (typeof window !== 'undefined' && localStorage.getItem('favData')) || '[]'
     )
   );
 
   useEffect(() => {
     setFavData(
       JSON.parse(
-        (typeof window !== "undefined" && localStorage.getItem("favData")) ||
-          "[]"
+        (typeof window !== 'undefined' && localStorage.getItem('favData')) ||
+          '[]'
       )
     );
   }, []);
@@ -46,8 +47,8 @@ export const FavContextProvider = ({
       setFavData((prev) => {
         let filteredData = prev.filter((prev) => prev.id !== favItem.id);
 
-        typeof window !== "undefined" &&
-          localStorage.setItem("favData", JSON.stringify(filteredData));
+        typeof window !== 'undefined' &&
+          localStorage.setItem('favData', JSON.stringify(filteredData));
 
         return filteredData;
       });
@@ -55,8 +56,8 @@ export const FavContextProvider = ({
       setFavData((prev) => {
         let updatedData = [...prev, favItem];
 
-        typeof window !== "undefined" &&
-          localStorage.setItem("favData", JSON.stringify(updatedData));
+        typeof window !== 'undefined' &&
+          localStorage.setItem('favData', JSON.stringify(updatedData));
         return updatedData;
       });
     }
