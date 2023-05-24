@@ -52,7 +52,7 @@ export const AuthContextProvider = ({
         });
       }
 
-      const res = await axios.get('http://localhost:3000/api/auth/me', {
+      const res = await axios.get('https://addakhana.vercel.app/api/auth/me', {
         headers: {
           Authorization: `Bearer ${jwt}`,
         },

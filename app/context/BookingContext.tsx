@@ -44,7 +44,7 @@ export const BookingContextProvider = ({
       const jwt = getCookie('jwt');
 
       const res = await axios.get(
-        `http://localhost:3000/api/bookings/getBookings`,
+        `https://addakhana.vercel.app/api/bookings/getBookings`,
         {
           headers: {
             Authorization: `Bearer ${jwt}`,
@@ -68,7 +68,7 @@ export const BookingContextProvider = ({
     try {
       if (window.confirm('Are you sure you want to cancel this booking')) {
         const deleteReservation = await axios.delete(
-          `http://localhost:3000/api/reserve/delete?bookingId=${bookingId}`
+          `https://addakhana.vercel.app/api/reserve/delete?bookingId=${bookingId}`
         );
         setBookings((prev) =>
           prev.filter((booking) => booking.id !== bookingId)
